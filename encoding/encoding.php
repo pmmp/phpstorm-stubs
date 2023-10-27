@@ -1,105 +1,116 @@
 <?php
 
+namespace pmmp\encoding {
 final class DataDecodeException extends \RuntimeException{
 }
+}
 
+namespace pmmp\encoding {
 final class ByteBuffer{
 
-	public function readUnsignedByte(?int &$offset = null) : int{}
+	public function readUnsignedByte() : int{}
 
-	public function writeUnsignedByte(int $value, ?int &$offset = null) : void{}
+	public function writeUnsignedByte(int $value) : void{}
 
-	public function readSignedByte(?int &$offset = null) : int{}
+	public function readSignedByte() : int{}
 
-	public function writeSignedByte(int $value, ?int &$offset = null) : void{}
+	public function writeSignedByte(int $value) : void{}
 
-	public function readUnsignedShortLE(?int &$offset = null) : int{}
+	public function readUnsignedShortLE() : int{}
 
-	public function readUnsignedShortBE(?int &$offset = null) : int{}
+	public function readUnsignedShortBE() : int{}
 
-	public function readSignedShortLE(?int &$offset = null) : int{}
+	public function readSignedShortLE() : int{}
 
-	public function readSignedShortBE(?int &$offset = null) : int{}
+	public function readSignedShortBE() : int{}
 
-	public function writeUnsignedShortLE(int $value, ?int &$offset = null) : void{}
+	public function writeUnsignedShortLE(int $value) : void{}
 
-	public function writeUnsignedShortBE(int $value, ?int &$offset = null) : void{}
+	public function writeUnsignedShortBE(int $value) : void{}
 
-	public function writeSignedShortLE(int $value, ?int &$offset = null) : void{}
+	public function writeSignedShortLE(int $value) : void{}
 
-	public function writeSignedShortBE(int $value, ?int &$offset = null) : void{}
+	public function writeSignedShortBE(int $value) : void{}
 
-	public function readUnsignedIntLE(?int &$offset = null) : int{}
+	public function readUnsignedIntLE() : int{}
 
-	public function readUnsignedIntBE(?int &$offset = null) : int{}
+	public function readUnsignedIntBE() : int{}
 
-	public function readSignedIntLE(?int &$offset = null) : int{}
+	public function readSignedIntLE() : int{}
 
-	public function readSignedIntBE(?int &$offset = null) : int{}
+	public function readSignedIntBE() : int{}
 
-	public function writeUnsignedIntLE(int $value, ?int &$offset = null) : void{}
+	public function writeUnsignedIntLE(int $value) : void{}
 
-	public function writeUnsignedIntBE(int $value, ?int &$offset = null) : void{}
+	public function writeUnsignedIntBE(int $value) : void{}
 
-	public function writeSignedIntLE(int $value, ?int &$offset = null) : void{}
+	public function writeSignedIntLE(int $value) : void{}
 
-	public function writeSignedIntBE(int $value, ?int &$offset = null) : void{}
+	public function writeSignedIntBE(int $value) : void{}
 
-	public function readUnsignedLongLE(?int &$offset = null) : int{}
+	public function readSignedLongLE() : int{}
 
-	public function readUnsignedLongBE(?int &$offset = null) : int{}
+	public function readSignedLongBE() : int{}
 
-	public function readSignedLongLE(?int &$offset = null) : int{}
+	public function writeSignedLongLE(int $value) : void{}
 
-	public function readSignedLongBE(?int &$offset = null) : int{}
+	public function writeSignedLongBE(int $value) : void{}
 
-	public function writeUnsignedLongLE(int $value, ?int &$offset = null) : void{}
+	public function readFloatLE() : float{}
 
-	public function writeUnsignedLongBE(int $value, ?int &$offset = null) : void{}
+	public function readFloatBE() : float{}
 
-	public function writeSignedLongLE(int $value, ?int &$offset = null) : void{}
+	public function writeFloatLE(float $value) : void{}
 
-	public function writeSignedLongBE(int $value, ?int &$offset = null) : void{}
+	public function writeFloatBE(float $value) : void{}
 
-	public function readFloatLE(?int &$offset = null) : float{}
+	public function readDoubleLE() : float{}
 
-	public function readFloatBE(?int &$offset = null) : float{}
+	public function readDoubleBE() : float{}
 
-	public function writeFloatLE(float $value, ?int &$offset = null) : void{}
+	public function writeDoubleLE(float $value) : void{}
 
-	public function writeFloatBE(float $value, ?int &$offset = null) : void{}
+	public function writeDoubleBE(float $value) : void{}
 
-	public function readDoubleLE(?int &$offset = null) : float{}
+	public function readUnsignedVarInt() : int{}
 
-	public function readDoubleBE(?int &$offset = null) : float{}
+	public function readSignedVarInt() : int{}
 
-	public function writeDoubleLE(float $value, ?int &$offset = null) : void{}
+	public function writeUnsignedVarInt(int $value) : void{}
 
-	public function writeDoubleBE(float $value, ?int &$offset = null) : void{}
+	public function writeSignedVarInt(int $value) : void{}
 
-	public function readUnsignedVarInt(?int &$offset = null) : int{}
+	public function readUnsignedVarLong() : int{}
 
-	public function readSignedVarInt(?int &$offset = null) : int{}
+	public function readSignedVarLong() : int{}
 
-	public function writeUnsignedVarInt(int $value, ?int &$offset = null) : void{}
+	public function writeUnsignedVarLong(int $value) : void{}
 
-	public function writeSignedVarInt(int $value, ?int &$offset = null) : void{}
+	public function writeSignedVarLong(int $value) : void{}
 
-	public function readUnsignedVarLong(?int &$offset = null) : int{}
+	public function readUnsignedTriadBE() : int{}
 
-	public function readSignedVarLong(?int &$offset = null) : int{}
+	public function readUnsignedTriadLE() : int{}
 
-	public function writeUnsignedVarLong(int $value, ?int &$offset = null) : void{}
+	public function writeUnsignedTriadBE(int $value) : void{}
 
-	public function writeSignedVarLong(int $value, ?int &$offset = null) : void{}
+	public function writeUnsignedTriadLE(int $value) : void{}
 
-	public function __construct(string $buffer){}
+	public function readSignedTriadBE() : int{}
+
+	public function readSignedTriadLE() : int{}
+
+	public function writeSignedTriadBE(int $value) : void{}
+
+	public function writeSignedTriadLE(int $value) : void{}
+
+	public function __construct(string $buffer = null){}
 
 	public function toString() : string{}
 
-	public function readByteArray(int $length, ?int &$offset = null) : string{}
+	public function readByteArray(int $length) : string{}
 
-	public function writeByteArray(string $value, ?int &$offset = null) : void{}
+	public function writeByteArray(string $value) : void{}
 
 	public function getOffset() : int{}
 
@@ -119,3 +130,5 @@ final class ByteBuffer{
 
 	public function __debugInfo() : array{}
 }
+}
+
