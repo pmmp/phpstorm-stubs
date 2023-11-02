@@ -162,6 +162,7 @@ class PhpCoreStubsProvider
         ],
         'OTHERS' => [
             'amqp',
+            'arraydebug',
             'blackfire',
             'cassandra',
             'chunkutils2',
