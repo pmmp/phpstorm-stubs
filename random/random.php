@@ -23,7 +23,7 @@ namespace {
      * @return void
      */
     function mt_srand(
-        int $seed = 0,
+        int $seed = null,
         #[PhpStormStubsElementAvailable(from: '7.1')] int $mode = MT_RAND_MT19937
     ): void {}
 
@@ -42,7 +42,7 @@ namespace {
      * @return void
      */
     function srand(
-        int $seed = 0,
+        int $seed = null,
         #[PhpStormStubsElementAvailable(from: '7.1')] int $mode = MT_RAND_MT19937
     ): void {}
 

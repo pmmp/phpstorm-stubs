@@ -630,9 +630,9 @@ class ZipArchive implements Countable
      * <b>ZipArchive::OVERWRITE</b>
      * </p>
      *
-     * @return int|true <i>Error codes</i>
+     * @return int|bool <i>Error codes</i>
      * <p>
-     * Returns <b>TRUE</b> on success or the error code.
+     * Returns <b>TRUE</b> on success, <b>FALSE</b> or the error code on error.
      * </p>
      * <p>
      * <b>ZipArchive::ER_EXISTS</b>
@@ -1046,7 +1046,7 @@ class ZipArchive implements Countable
      * ignoring any changes made.
      * <b>ZipArchive::FL_NOCASE</b>
      * </p>
-     * @return array|false an array containing the entry details or <b>FALSE</b> on failure.
+     * @return array{name: string, index: int, crc: int, size: int, mtime: int, comp_size: int, comp_method: int, encryption_method: int}|false an array containing the entry details or <b>FALSE</b> on failure.
      */
     public function statName(
         #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $name,
@@ -1065,7 +1065,7 @@ class ZipArchive implements Countable
      * information about the original file in the archive,
      * ignoring any changes made.
      * </p>
-     * @return array|false an array containing the entry details or <b>FALSE</b> on failure.
+     * @return array{name: string, index: int, crc: int, size: int, mtime: int, comp_size: int, comp_method: int, encryption_method: int}|false an array containing the entry details or <b>FALSE</b> on failure.
      */
     public function statIndex(
         #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $index,

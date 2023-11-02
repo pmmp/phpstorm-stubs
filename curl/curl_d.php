@@ -1144,7 +1144,7 @@ define('CURL_VERSION_LIBZ', 8);
  * Will be the most recent age value for the libcurl.
  * @link https://php.net/manual/en/curl.constants.php
  */
-define('CURLVERSION_NOW', 9);
+define('CURLVERSION_NOW', 10);
 /**
  * All fine. Proceed as usual.
  * @link https://php.net/manual/en/curl.constants.php
@@ -2272,7 +2272,7 @@ define('CURL_PUSH_DENY', 1);
  * @link https://php.net/manual/en/curl.constants.php
  * @since 7.0.7
  */
-define('CURL_MAX_READ_SIZE', 524288);
+define('CURL_MAX_READ_SIZE', 10485760);
 
 /**
  * Enables the use of an abstract Unix domain socket instead of establishing a TCP connection to a host and sets the path to the given string.
@@ -2973,7 +2973,7 @@ define("CURLE_SSL_PINNEDPUBKEYNOTMATCH", 90);
 /**
  * @link https://php.net/manual/en/curl.constants.php
  */
-define("CURLINFO_LASTONE", 60);
+define("CURLINFO_LASTONE", 62);
 /**
  * An easy handle already added to a multi handle was attempted to get added a second time.
  * @link https://www.php.net/manual/en/function.curl-multi-exec.php

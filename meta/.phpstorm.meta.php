@@ -187,10 +187,6 @@ namespace PHPSTORM_META {
     expectedArguments(\ftp_put(), 3, FTP_ASCII,FTP_BINARY);
     expectedArguments(\ftp_fput(), 3, FTP_ASCII,FTP_BINARY);
 
-	expectedArguments(\fopen(), 1, 'r', 'r+', 'w', 'w+', 'a', 'a+', 'x', 'x+', 'c', 'c+', 'e');
-	expectedArguments(\popen(), 1, 'r', 'r+', 'w', 'w+', 'a', 'a+', 'x', 'x+', 'c', 'c+', 'e');
-	expectedArguments(\SplFileInfo::openFile(), 0, 'r', 'r+', 'w', 'w+', 'a', 'a+', 'x', 'x+', 'c', 'c+', 'e');
-
 	expectedArguments(\htmlentities(), 1, ENT_COMPAT | ENT_QUOTES | ENT_NOQUOTES | ENT_IGNORE | ENT_SUBSTITUTE | ENT_DISALLOWED | ENT_HTML401 | ENT_XML1 | ENT_XHTML | ENT_HTML5);
 	expectedArguments(\htmlspecialchars(), 1, ENT_COMPAT | ENT_QUOTES | ENT_NOQUOTES | ENT_IGNORE | ENT_SUBSTITUTE | ENT_DISALLOWED | ENT_HTML401 | ENT_XML1 | ENT_XHTML | ENT_HTML5);
 	expectedArguments(\html_entity_decode(), 1, ENT_COMPAT | ENT_QUOTES | ENT_NOQUOTES | ENT_HTML401 | ENT_XML1 | ENT_XHTML | ENT_HTML5);
@@ -670,6 +666,12 @@ namespace PHPSTORM_META {
     expectedArguments(\krsort(), 1, argumentsSet('SortFlags'));
 
     expectedArguments(\array_unique(), 1, SORT_REGULAR, SORT_NUMERIC, SORT_STRING, SORT_LOCALE_STRING);
+
+    expectedReturnValues(\PHP_OS_FAMILY, 'Windows', 'Linux', 'Darwin', 'BSD', 'Solaris', 'Unknown');
+    expectedReturnValues(\PHP_OS, 'Darwin', 'Linux', 'Windows', 'WIN32', 'WINNT', 'FreeBSD', 'CYGWIN_NT-5.1', 'HP-UX', 'IRIX64', 'NetBSD', 'OpenBSD', 'OpenBSD');
+    expectedReturnValues(\PHP_SAPI, 'cli', 'phpdbg', 'embed', 'apache', 'apache2handler', 'cgi-fcgi', 'cli-server', 'fpm-fcgi', 'litespeed');
+    expectedReturnValues(\PHP_VERSION, '5.3', '5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2');
+    expectedReturnValues(\PHP_VERSION_ID, 50300, 50400, 50500, 50600, 70000, 70100, 70200, 70300, 70400, 80000, 80100, 80200);
 
     /**
      * Use this constant to mark the function with an argument on the specified position as an exit point

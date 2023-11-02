@@ -196,6 +196,7 @@ class DateTimeImmutable implements DateTimeInterface
      * Adds an amount of days, months, years, hours, minutes and seconds
      * @param DateInterval $interval
      * @return static
+     * @link https://secure.php.net/manual/en/datetimeimmutable.add.php
      */
     #[TentativeType]
     public function add(DateInterval $interval): DateTimeImmutable {}
@@ -762,6 +763,7 @@ class DateTimeZone
     /**
      * @param string $timezone
      * @link https://php.net/manual/en/datetimezone.construct.php
+     * @throws Exception Emits Exception in case of an error.
      */
     public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $timezone) {}
 
@@ -813,7 +815,7 @@ class DateTimeZone
 
     /**
      * Returns associative array containing dst, offset and the timezone name
-     * @return array
+     * @return array<string, list<array{dst: bool, offset: int, timezone_id: string|null}>>
      * @link https://php.net/manual/en/datetimezone.listabbreviations.php
      */
     #[TentativeType]
