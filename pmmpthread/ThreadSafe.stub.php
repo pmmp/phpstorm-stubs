@@ -54,5 +54,5 @@ class ThreadSafe implements \IteratorAggregate
      */
     public function wait(int $timeout = 0) : bool{}
 
-	public function getIterator() : \Iterator{}
+    public function getIterator() : \Iterator{}
 }

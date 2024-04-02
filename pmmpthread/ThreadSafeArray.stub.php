@@ -16,12 +16,13 @@ namespace pmmp\thread;
 final class ThreadSafeArray extends ThreadSafe implements \Countable, \ArrayAccess
 {
     /**
-     * Fetches a chunk of the objects properties table of the given size
+     * Removes and returns $size items from the array. Equivalent to calling shift() $size times.
+     * Similar to array_slice() with offset 0, but also removes the items returned.
      *
      * @param int $size The number of items to fetch
      * @param bool $preserve Preserve the keys of members
      *
-     * @return array An array of items from the objects member table
+     * @return array An array of items removed from the array
      */
     public function chunk(int $size, bool $preserve = false) : array{}
 
@@ -35,38 +36,40 @@ final class ThreadSafeArray extends ThreadSafe implements \Countable, \ArrayAcce
      * @param array $array
      *
      * @return ThreadSafeArray A ThreadSafeArray object created from the provided array
+     * @throws NonThreadSafeValueError if the array contains any non-thread-safe values
      */
-    public static function fromArray(array $array) : ThreadSafeArray {}
+    public static function fromArray(array $array) : ThreadSafeArray{}
 
     /**
-     * Merges data into the current ThreadSafeArray
+     * Merges data into the current ThreadSafeArray, similar to array_merge()
      *
-     * @param mixed $from The data to merge
+     * @param array|object $from The data to merge
      * @param bool $overwrite Overwrite existing keys flag
      *
      * @return bool A boolean indication of success
+     * @throws NonThreadSafeValueError if $from contains any non-thread-safe values
      */
-    public function merge(mixed $from, bool $overwrite = true) : bool{}
+    public function merge(array|object $from, bool $overwrite = true) : bool{}
 
     /**
-     * Pops an item from the array
+     * Pops an item from the end of the array, similar to array_pop()
      *
      * @return mixed The last item in the array
      */
     public function pop() : mixed{}
 
     /**
-     * Shifts an item from the array
+     * Shifts an item from the start of the array, similar to array_shift()
      *
      * @return mixed The first item in the array
      */
     public function shift() : mixed{}
 
-	public function offsetGet(mixed $offset) : mixed{}
+    public function offsetGet(mixed $offset) : mixed{}
 
-	public function offsetSet(mixed $offset, mixed $value) : void{}
+    public function offsetSet(mixed $offset, mixed $value) : void{}
 
-	public function offsetExists(mixed $offset) : bool{}
+    public function offsetExists(mixed $offset) : bool{}
 
-	public function offsetUnset(mixed $offset) : void{}
+    public function offsetUnset(mixed $offset) : void{}
 }

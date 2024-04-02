@@ -48,7 +48,7 @@ class Worker extends Thread
      * Tell if the referenced Worker has been shutdown
      *
      * @return bool A boolean indication of state
-	 * @alias pmmp\thread\Thread::isJoined
+     * @alias pmmp\thread\Thread::isJoined
      */
     public function isShutdown() : bool{}
 
@@ -56,7 +56,7 @@ class Worker extends Thread
      * Shuts down the Worker after executing all the threaded tasks previously stacked
      *
      * @return bool A boolean indication of success
-	 * @alias pmmp\thread\Thread::join
+     * @alias pmmp\thread\Thread::join
      */
     public function shutdown() : bool{}
 

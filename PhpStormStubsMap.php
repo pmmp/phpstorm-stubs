@@ -1327,6 +1327,7 @@ const CLASSES = array (
   'pmmp\\encoding\\ByteBuffer' => 'encoding/encoding.php',
   'pmmp\\encoding\\DataDecodeException' => 'encoding/encoding.php',
   'pmmp\\thread\\ConnectionException' => 'pmmpthread/ConnectionException.stub.php',
+  'pmmp\\thread\\NonThreadSafeValueError' => 'pmmpthread/NonThreadSafeValueError.stub.php',
   'pmmp\\thread\\Pool' => 'pmmpthread/Pool.stub.php',
   'pmmp\\thread\\Runnable' => 'pmmpthread/Runnable.stub.php',
   'pmmp\\thread\\Thread' => 'pmmpthread/Thread.stub.php',
