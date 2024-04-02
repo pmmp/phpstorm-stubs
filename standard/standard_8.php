@@ -59,18 +59,16 @@ use JetBrains\PhpStorm\Pure;
  * (strerror) corresponding to the present value of
  * errno.
  * </p>
- * @return bool true on success or false on failure.
  */
 #[LanguageLevelTypeAware(['8.2' => 'true'], default: 'bool')]
-function syslog(int $priority, string $message): bool {}
+function syslog(int $priority, string $message) {}
 
 /**
  * Close connection to system logger
  * @link https://php.net/manual/en/function.closelog.php
- * @return bool true on success or false on failure.
  */
 #[LanguageLevelTypeAware(['8.2' => 'true'], default: 'bool')]
-function closelog(): bool {}
+function closelog() {}
 
 /**
  * Registers a function that will be called when PHP starts sending output.
@@ -140,7 +138,7 @@ function define_syslog_variables() {}
  */
 #[Pure]
 #[LanguageLevelTypeAware(["8.0" => "string"], default: "string|false")]
-function metaphone(string $string, int $max_phonemes = 0): false|string {}
+function metaphone(string $string, int $max_phonemes = 0) {}
 
 /**
  * Turn on output buffering
@@ -395,10 +393,9 @@ function ob_list_handlers(): array {}
  * parameter sort_flags, for details
  * see sort.
  * </p>
- * @return bool true on success or false on failure.
  */
 #[LanguageLevelTypeAware(['8.2' => 'true'], default: 'bool')]
-function ksort(array &$array, int $flags = SORT_REGULAR): bool {}
+function ksort(array &$array, int $flags = SORT_REGULAR) {}
 
 /**
  * Sort an array by key in reverse order
@@ -411,10 +408,9 @@ function ksort(array &$array, int $flags = SORT_REGULAR): bool {}
  * sort_flags, for details see
  * sort.
  * </p>
- * @return bool true on success or false on failure.
  */
 #[LanguageLevelTypeAware(['8.2' => 'true'], default: 'bool')]
-function krsort(array &$array, int $flags = SORT_REGULAR): bool {}
+function krsort(array &$array, int $flags = SORT_REGULAR) {}
 
 /**
  * Sort an array using a "natural order" algorithm
@@ -422,9 +418,9 @@ function krsort(array &$array, int $flags = SORT_REGULAR): bool {}
  * @param array &$array <p>
  * The input array.
  * </p>
- * @return bool true on success or false on failure.
  */
-function natsort(array &$array): bool {}
+#[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+function natsort(array &$array) {}
 
 /**
  * Sort an array using a case insensitive "natural order" algorithm
@@ -432,9 +428,9 @@ function natsort(array &$array): bool {}
  * @param array &$array <p>
  * The input array.
  * </p>
- * @return bool true on success or false on failure.
  */
-function natcasesort(array &$array): bool {}
+#[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+function natcasesort(array &$array) {}
 
 /**
  * Sort an array and maintain index association
@@ -447,10 +443,9 @@ function natcasesort(array &$array): bool {}
  * parameter sort_flags, for details
  * see sort.
  * </p>
- * @return bool true on success or false on failure.
  */
 #[LanguageLevelTypeAware(['8.2' => 'true'], default: 'bool')]
-function asort(array &$array, int $flags = SORT_REGULAR): bool {}
+function asort(array &$array, int $flags = SORT_REGULAR) {}
 
 /**
  * Sort an array in reverse order and maintain index association
@@ -463,10 +458,9 @@ function asort(array &$array, int $flags = SORT_REGULAR): bool {}
  * sort_flags, for details see
  * sort.
  * </p>
- * @return bool true on success or false on failure.
  */
 #[LanguageLevelTypeAware(['8.2' => 'true'], default: 'bool')]
-function arsort(array &$array, int $flags = SORT_REGULAR): bool {}
+function arsort(array &$array, int $flags = SORT_REGULAR) {}
 
 /**
  * Sort an array
@@ -482,10 +476,9 @@ function arsort(array &$array, int $flags = SORT_REGULAR): bool {}
  * Sorting type flags:<br>
  * SORT_REGULAR - compare items normally
  * (don't change types)</p>
- * @return bool true on success or false on failure.
  */
 #[LanguageLevelTypeAware(['8.2' => 'true'], default: 'bool')]
-function sort(array &$array, int $flags = SORT_REGULAR): bool {}
+function sort(array &$array, int $flags = SORT_REGULAR) {}
 
 /**
  * Sort an array in reverse order
@@ -498,9 +491,9 @@ function sort(array &$array, int $flags = SORT_REGULAR): bool {}
  * parameter sort_flags, for details see
  * sort.
  * </p>
- * @return bool true on success or false on failure.
  */
-function rsort(array &$array, int $flags = SORT_REGULAR): bool {}
+#[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+function rsort(array &$array, int $flags = SORT_REGULAR) {}
 
 /**
  * Sort an array by values using a user-defined comparison function
@@ -513,10 +506,9 @@ function rsort(array &$array, int $flags = SORT_REGULAR): bool {}
  * greater than zero if the first argument is considered to be
  * respectively less than, equal to, or greater than the second.
  * </p>
- * @return bool true on success or false on failure.
  */
 #[LanguageLevelTypeAware(['8.2' => 'true'], default: 'bool')]
-function usort(array &$array, callable $callback): bool {}
+function usort(array &$array, callable $callback) {}
 
 /**
  * Sort an array with a user-defined comparison function and maintain index association
@@ -528,10 +520,9 @@ function usort(array &$array, callable $callback): bool {}
  * See usort and uksort for
  * examples of user-defined comparison functions.
  * </p>
- * @return bool true on success or false on failure.
  */
 #[LanguageLevelTypeAware(['8.2' => 'true'], default: 'bool')]
-function uasort(array &$array, callable $callback): bool {}
+function uasort(array &$array, callable $callback) {}
 
 /**
  * Sort an array by keys using a user-defined comparison function
@@ -550,10 +541,9 @@ function uasort(array &$array, callable $callback): bool {}
  * be respectively less than, equal to, or greater than the
  * second.
  * </p>
- * @return bool true on success or false on failure.
  */
 #[LanguageLevelTypeAware(['8.2' => 'true'], default: 'bool')]
-function uksort(array &$array, callable $callback): bool {}
+function uksort(array &$array, callable $callback) {}
 
 /**
  * Shuffle an array
@@ -561,10 +551,9 @@ function uksort(array &$array, callable $callback): bool {}
  * @param array &$array <p>
  * The array.
  * </p>
- * @return bool true on success or false on failure.
  */
 #[LanguageLevelTypeAware(['8.2' => 'true'], default: 'bool')]
-function shuffle(array &$array): bool {}
+function shuffle(array &$array) {}
 
 /**
  * Apply a user function to every member of an array
@@ -596,10 +585,9 @@ function shuffle(array &$array): bool {}
  * it will be passed as the third parameter to the callback
  * funcname.
  * </p>
- * @return bool true on success or false on failure.
  */
 #[LanguageLevelTypeAware(['8.2' => 'true'], default: 'bool')]
-function array_walk(object|array &$array, callable $callback, mixed $arg): bool {}
+function array_walk(object|array &$array, callable $callback, mixed $arg) {}
 
 /**
  * Apply a user function recursively to every member of an array
@@ -625,10 +613,9 @@ function array_walk(object|array &$array, callable $callback, mixed $arg): bool 
  * it will be passed as the third parameter to the callback
  * funcname.
  * </p>
- * @return bool true on success or false on failure.
  */
 #[LanguageLevelTypeAware(['8.2' => 'true'], default: 'bool')]
-function array_walk_recursive(object|array &$array, callable $callback, mixed $arg): bool {}
+function array_walk_recursive(object|array &$array, callable $callback, mixed $arg) {}
 
 /**
  * Counts all elements in an array, or something in an object.
@@ -937,7 +924,11 @@ function array_fill_keys(array $keys, mixed $value): array {}
  * end, inclusive.
  */
 #[Pure]
-function range($start, $end, int|float $step = 1): array {}
+function range(
+    #[LanguageLevelTypeAware(['8.3' => 'string|int|float'], default: '')] $start,
+    #[LanguageLevelTypeAware(['8.3' => 'string|int|float'], default: '')] $end,
+    int|float $step = 1
+): array {}
 
 /**
  * Sort multiple or multi-dimensional arrays

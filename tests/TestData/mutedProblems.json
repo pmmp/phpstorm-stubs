@@ -800,129 +800,6 @@
       ]
     },
     {
-      "name": "timezone_transitions_get",
-      "parameters": [
-        {
-          "name": "timestampBegin",
-          "problems": [
-            {
-              "description": "wrong default value",
-              "versions": [
-                "ALL"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "timestampEnd",
-          "problems": [
-            {
-              "description": "wrong default value",
-              "versions": [
-                "ALL"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "mb_encode_mimeheader",
-      "parameters": [
-        {
-          "name": "newline",
-          "problems": [
-            {
-              "description": "wrong default value",
-              "versions": [
-                "ALL"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "trim",
-      "parameters": [
-        {
-          "name": "characters",
-          "problems": [
-            {
-              "description": "wrong default value",
-              "versions": [
-                "ALL"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "rtrim",
-      "parameters": [
-        {
-          "name": "characters",
-          "problems": [
-            {
-              "description": "wrong default value",
-              "versions": [
-                "ALL"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "chop",
-      "parameters": [
-        {
-          "name": "characters",
-          "problems": [
-            {
-              "description": "wrong default value",
-              "versions": [
-                "ALL"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "ltrim",
-      "parameters": [
-        {
-          "name": "characters",
-          "problems": [
-            {
-              "description": "wrong default value",
-              "versions": [
-                "ALL"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "explode",
-      "parameters": [
-        {
-          "name": "limit",
-          "problems": [
-            {
-              "description": "wrong default value",
-              "versions": [
-                "ALL"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "name": "bcdiv",
       "problems": [
         {
@@ -1052,6 +929,17 @@
           ]
         }
       ]
+    },
+    {
+      "name": "hash_pbkdf2",
+      "problems": [
+        {
+          "description": "parameter mismatch",
+          "versions": [
+            8.2
+          ]
+        }
+      ]
     }
   ],
   "classes": [
@@ -1153,7 +1041,8 @@
           "versions": [
             8.0,
             8.1,
-            8.2
+            8.2,
+            8.3
           ]
         }
       ],
@@ -1809,44 +1698,12 @@
               ]
             }
           ]
-        },
-        {
-          "name": "__construct",
-          "parameters": [
-            {
-              "name": "flags",
-              "problems": [
-                {
-                  "description": "wrong default value",
-                  "versions": [
-                    "ALL"
-                  ]
-                }
-              ]
-            }
-          ]
         }
       ]
     },
     {
       "name": "PharData",
       "methods": [
-        {
-          "name": "__construct",
-          "parameters": [
-            {
-              "name": "flags",
-              "problems": [
-                {
-                  "description": "wrong default value",
-                  "versions": [
-                    "ALL"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
         {
           "name": "__destruct",
           "problems": [
@@ -2710,101 +2567,11 @@
               ]
             }
           ]
-        },
-        {
-          "name": "getTransitions",
-          "parameters": [
-            {
-              "name": "timestampBegin",
-              "problems": [
-                {
-                  "description": "wrong default value",
-                  "versions": [
-                    "ALL"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "timestampEnd",
-              "problems": [
-                {
-                  "description": "wrong default value",
-                  "versions": [
-                    "ALL"
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "RecursiveCachingIterator",
-      "methods": [
-        {
-          "name": "__construct",
-          "parameters": [
-            {
-              "name": "flags",
-              "problems": [
-                {
-                  "description": "wrong default value",
-                  "versions": [
-                    "ALL"
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "RecursiveTreeIterator",
-      "methods": [
-        {
-          "name": "__construct",
-          "parameters": [
-            {
-              "name": "mode",
-              "problems": [
-                {
-                  "description": "wrong default value",
-                  "versions": [
-                    "ALL"
-                  ]
-                }
-              ]
-            }
-          ]
         }
       ]
     },
     {
       "name": "FilesystemIterator",
-      "methods": [
-        {
-          "name": "__construct",
-          "parameters": [
-            {
-              "name": "flags",
-              "problems": [
-                {
-                  "description": "wrong default value",
-                  "versions": [
-                    "ALL"
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "MultipleIterator",
       "methods": [
         {
           "name": "__construct",
@@ -3214,7 +2981,8 @@
           "versions": [
             8.0,
             8.1,
-            8.2
+            8.2,
+            8.3
           ]
         }
       ]
@@ -3241,7 +3009,8 @@
           "versions": [
             8.0,
             8.1,
-            8.2
+            8.2,
+            8.3
           ]
         }
       ]
@@ -3331,5 +3100,6 @@
         }
       ]
     }
-  ]
+  ],
+  "enums": []
 }

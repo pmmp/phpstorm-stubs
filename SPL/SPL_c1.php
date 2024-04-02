@@ -59,7 +59,7 @@ class SplFileInfo implements Stringable
      * @since 5.2.2
      */
     #[TentativeType]
-    public function getBasename(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $suffix = null): string {}
+    public function getBasename(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $suffix = ''): string {}
 
     /**
      * Gets the path to the file
@@ -889,7 +889,7 @@ class SplFileObject extends SplFileInfo implements RecursiveIterator, SeekableIt
     #[TentativeType]
     public function fwrite(
         #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $data,
-        #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $length = null
+        #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $length = 0
     ): int|false {}
 
     /**
@@ -1372,7 +1372,7 @@ abstract class SplHeap implements Iterator, Countable
     /**
      * Extracts a node from top of the heap and sift up.
      * @link https://php.net/manual/en/splheap.extract.php
-     * @return mixed The value of the extracted node.
+     * @return TValue The value of the extracted node.
      */
     #[TentativeType]
     public function extract(): mixed {}
@@ -1531,7 +1531,7 @@ class SplMinHeap extends SplHeap
      * @param TValue $value <p>
      * The value to insert.
      * </p>
-     * @return void
+     * @return true
      */
     public function insert($value) {}
 

@@ -4,6 +4,7 @@
  * @since 5.6
  */
 
+use JetBrains\PhpStorm\Deprecated;
 use JetBrains\PhpStorm\ExpectedValues;
 use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
 use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
@@ -112,7 +113,6 @@ function array_values(array $array): array {}
 function array_count_values(array $array): array {}
 
 /**
- * (PHP 5 &gt;=5.5.0)<br/>
  * Return the values from a single column in the input array
  * @link https://secure.php.net/manual/en/function.array-column.php
  * @param array $array <p>A multi-dimensional array (record set) from which to pull a column of values.</p>
@@ -949,6 +949,7 @@ class AssertionError extends Error {}
  * </p>
  * @return mixed The original setting of any option.
  */
+#[Deprecated(since: "8.3")]
 function assert_options(int $option, mixed $value): mixed {}
 
 /**

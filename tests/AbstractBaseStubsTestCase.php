@@ -16,6 +16,7 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use StubTests\Model\PHPClass;
 use StubTests\Model\PHPConst;
+use StubTests\Model\PHPEnum;
 use StubTests\Model\PHPFunction;
 use StubTests\Model\PHPInterface;
 use StubTests\Parsers\ParserUtils;
@@ -67,6 +68,17 @@ abstract class AbstractBaseStubsTestCase extends TestCase
                 /** @var PHPConst $rightConstant */
                 $rightConstant = array_pop($constants);
                 $value = $leftConstant->value|$rightConstant->value;
+            } elseif ($defaultValue->left instanceof ClassConstFetch && $defaultValue->right instanceof ClassConstFetch){
+                $leftClass = $defaultValue->left->class->toString();
+                $rightClass = $defaultValue->right->class->toString();
+                $leftClass = PhpStormStubsSingleton::getPhpStormStubs()->getClass($leftClass);
+                $rightClass = PhpStormStubsSingleton::getPhpStormStubs()->getClass($rightClass);
+                if ($leftClass === null || $rightClass === null) {
+                    throw new Exception("Class $leftClass->name or $rightClass->name not found in stubs");
+                }
+                $leftConstant = $leftClass->getConstant((string)$defaultValue->left->name);
+                $rightConstant = $rightClass->getConstant((string)$defaultValue->right->name);
+                $value = $leftConstant->value|$rightConstant->value;
             }
         } elseif ($defaultValue instanceof UnaryMinus && property_exists($defaultValue->expr, 'value')) {
             $value = '-' . $defaultValue->expr->value;
@@ -75,12 +87,15 @@ abstract class AbstractBaseStubsTestCase extends TestCase
             if ($class === 'self' && $contextClass !== null) {
                 $class = $contextClass->name;
             }
-            $parentClass = PhpStormStubsSingleton::getPhpStormStubs()->getClass($class) ??
+            $parentClass = PhpStormStubsSingleton::getPhpStormStubs()->getEnum($class) ??
+                PhpStormStubsSingleton::getPhpStormStubs()->getClass($class) ??
                 PhpStormStubsSingleton::getPhpStormStubs()->getInterface($class);
             if ($parentClass === null) {
                 throw new Exception("Class $class not found in stubs");
             }
-            if ((string)$defaultValue->name === 'class') {
+            if ($parentClass instanceof PHPEnum) {
+                $value = $parentClass->name . "::" . $defaultValue->name;
+            } elseif ((string)$defaultValue->name === 'class') {
                 $value = (string)$defaultValue->class;
             } else {
                 $constant = $parentClass->getConstant((string)$defaultValue->name);;
@@ -90,6 +105,8 @@ abstract class AbstractBaseStubsTestCase extends TestCase
             $value = "null";
         } elseif (is_array($defaultValue) || $defaultValue instanceof Array_) {
             $value = '[]';
+        } elseif ($defaultValue instanceof \UnitEnum){
+            $value = get_class($defaultValue) . "::" . $defaultValue->name;
         } else {
             $value = strval($defaultValue);
         }

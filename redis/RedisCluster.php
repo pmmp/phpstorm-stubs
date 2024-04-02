@@ -77,11 +77,12 @@ class RedisCluster
      * Creates a Redis Cluster client
      *
      * @param string|null   $name
-     * @param array         $seeds
-     * @param float         $timeout
-     * @param float         $readTimeout
+     * @param array|null    $seeds
+     * @param int|float     $timeout
+     * @param int|float     $readTimeout
      * @param bool          $persistent
-     * @param string|null   $auth
+     * @param mixed         $auth
+     * @param array|null    $context
      * @throws RedisClusterException
      *
      * @example
@@ -105,7 +106,7 @@ class RedisCluster
      * $redisClusterDev = new RedisCluster('test');
      * </pre>
      */
-    public function __construct($name, $seeds, $timeout = null, $readTimeout = null, $persistent = false, $auth = null) {}
+    public function __construct($name, $seeds = null, $timeout = null, $readTimeout = null, $persistent = false, $auth = null, $context = null) {}
 
     /**
      * Disconnects from the RedisCluster instance, except when pconnect is used.
@@ -246,7 +247,7 @@ class RedisCluster
      *
      * @param   string $key
      * @param   int    $ttl
-     * @param   string $value
+     * @param   mixed $value
      *
      * @return  bool   TRUE if the command is successful.
      * @link    https://redis.io/commands/setex
@@ -877,9 +878,9 @@ class RedisCluster
      * If this value is already in the set, FALSE is returned.
      *
      * @param   string $key    Required key
-     * @param   string $value1 Required value
-     * @param   string $value2 Optional value
-     * @param   string $valueN Optional value
+     * @param   mixed $value1 Required value
+     * @param   mixed $value2 Optional value
+     * @param   mixed $valueN Optional value
      *
      * @return  int|false     The number of elements added to the set
      * @link    https://redis.io/commands/sadd
@@ -1538,7 +1539,7 @@ class RedisCluster
      *
      * @param string $key
      * @param string $hashKey
-     * @param string $value
+     * @param mixed $value
      *
      * @return int
      * 1 if value didn't exist and was added successfully,

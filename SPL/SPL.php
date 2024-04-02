@@ -447,7 +447,7 @@ class IteratorIterator implements OuterIterator
      * @param Traversable $iterator
      * @param string|null $class [optional]
      */
-    public function __construct(Traversable $iterator, #[PhpStormStubsElementAvailable(from: '8.0')] ?string $class = '') {}
+    public function __construct(Traversable $iterator, #[PhpStormStubsElementAvailable(from: '8.0')] ?string $class = null) {}
 
     /**
      * Get the inner iterator
@@ -935,7 +935,7 @@ class RecursiveCachingIterator extends CachingIterator implements RecursiveItera
      * @param Iterator $iterator The iterator to cache.
      * @param int $flags [optional] A bitmask of flags. See CachingIterator class constants for details.
      */
-    public function __construct(Iterator $iterator, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = self::CALL_TOSTRING) {}
+    public function __construct(Iterator $iterator, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = CachingIterator::CALL_TOSTRING) {}
 
     /**
      * Check whether the current element of the inner iterator has children
@@ -1336,7 +1336,7 @@ class RecursiveRegexIterator extends RegexIterator implements RecursiveIterator
     public function __construct(
         RecursiveIterator $iterator,
         #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $pattern,
-        #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $mode = self::MATCH,
+        #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $mode = RegexIterator::MATCH,
         #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = 0,
         #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $pregFlags = 0
     ) {}
@@ -1385,7 +1385,7 @@ class RecursiveTreeIterator extends RecursiveIteratorIterator
         $iterator,
         #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = self::BYPASS_KEY,
         #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $cachingIteratorFlags = CachingIterator::CATCH_GET_CHILD,
-        #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $mode = self::SELF_FIRST
+        #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $mode = RecursiveIteratorIterator::SELF_FIRST
     ) {}
 
     /**
@@ -1683,20 +1683,18 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Sort the entries by value
      * @link https://php.net/manual/en/arrayobject.asort.php
-     * @param int $flags [optional]
-     * @return bool
      */
     #[TentativeType]
-    public function asort(#[PhpStormStubsElementAvailable(from: '8.0')] int $flags = SORT_REGULAR): bool {}
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function asort(#[PhpStormStubsElementAvailable(from: '8.0')] int $flags = SORT_REGULAR) {}
 
     /**
      * Sort the entries by key
      * @link https://php.net/manual/en/arrayobject.ksort.php
-     * @param int $flags [optional]
-     * @return bool
      */
     #[TentativeType]
-    public function ksort(#[PhpStormStubsElementAvailable(from: '8.0')] int $flags = SORT_REGULAR): bool {}
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function ksort(#[PhpStormStubsElementAvailable(from: '8.0')] int $flags = SORT_REGULAR) {}
 
     /**
      * Sort the entries with a user-defined comparison function and maintain key association
@@ -1709,10 +1707,10 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * be respectively less than, equal to, or greater than the
      * second.
      * </p>
-     * @return bool
      */
     #[TentativeType]
-    public function uasort(#[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback): bool {}
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function uasort(#[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback) {}
 
     /**
      * Sort the entries by keys using a user-defined comparison function
@@ -1728,26 +1726,26 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * be respectively less than, equal to, or greater than the
      * second.
      * </p>
-     * @return bool
      */
     #[TentativeType]
-    public function uksort(#[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback): bool {}
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function uksort(#[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback) {}
 
     /**
      * Sort entries using a "natural order" algorithm
      * @link https://php.net/manual/en/arrayobject.natsort.php
-     * @return bool
      */
     #[TentativeType]
-    public function natsort(): bool {}
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function natsort() {}
 
     /**
      * Sort an array using a case insensitive "natural order" algorithm
      * @link https://php.net/manual/en/arrayobject.natcasesort.php
-     * @return bool
      */
     #[TentativeType]
-    public function natcasesort(): bool {}
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function natcasesort() {}
 
     /**
      * Unserialize an ArrayObject
@@ -1955,20 +1953,18 @@ class ArrayIterator implements SeekableIterator, ArrayAccess, Serializable, Coun
     /**
      * Sort array by values
      * @link https://php.net/manual/en/arrayiterator.asort.php
-     * @param int $flags [optional]
-     * @return bool
      */
     #[TentativeType]
-    public function asort(#[PhpStormStubsElementAvailable(from: '8.0')] int $flags = SORT_REGULAR): bool {}
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function asort(#[PhpStormStubsElementAvailable(from: '8.0')] int $flags = SORT_REGULAR) {}
 
     /**
      * Sort array by keys
      * @link https://php.net/manual/en/arrayiterator.ksort.php
-     * @param int $flags [optional]
-     * @return bool
      */
     #[TentativeType]
-    public function ksort(#[PhpStormStubsElementAvailable(from: '8.0')] int $flags = SORT_REGULAR): bool {}
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function ksort(#[PhpStormStubsElementAvailable(from: '8.0')] int $flags = SORT_REGULAR) {}
 
     /**
      * User defined sort
@@ -1976,10 +1972,10 @@ class ArrayIterator implements SeekableIterator, ArrayAccess, Serializable, Coun
      * @param callable $callback <p>
      * The compare function used for the sort.
      * </p>
-     * @return void
      */
     #[TentativeType]
-    public function uasort(#[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback): bool {}
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function uasort(#[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback) {}
 
     /**
      * User defined sort
@@ -1987,26 +1983,26 @@ class ArrayIterator implements SeekableIterator, ArrayAccess, Serializable, Coun
      * @param callable $callback <p>
      * The compare function used for the sort.
      * </p>
-     * @return void
      */
     #[TentativeType]
-    public function uksort(#[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback): bool {}
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function uksort(#[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback) {}
 
     /**
      * Sort an array naturally
      * @link https://php.net/manual/en/arrayiterator.natsort.php
-     * @return bool
      */
     #[TentativeType]
-    public function natsort(): bool {}
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function natsort() {}
 
     /**
      * Sort an array naturally, case insensitive
      * @link https://php.net/manual/en/arrayiterator.natcasesort.php
-     * @return bool
      */
     #[TentativeType]
-    public function natcasesort(): bool {}
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function natcasesort() {}
 
     /**
      * Unserialize

@@ -1,6 +1,7 @@
 <?php
 
 namespace {
+    use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
     use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
     use JetBrains\PhpStorm\Pure;
 
@@ -14,7 +15,7 @@ namespace {
     /**
      * Seeds the Mersenne Twister Random Number Generator
      * @link https://php.net/manual/en/function.mt-srand.php
-     * @param int $seed <p>
+     * @param int|null $seed <p>
      * An optional seed value
      * </p>
      * @param int $mode [optional] <p>
@@ -23,7 +24,7 @@ namespace {
      * @return void
      */
     function mt_srand(
-        int $seed = null,
+        #[LanguageLevelTypeAware(['8.3' => 'int|null'], default: 'int')] $seed = null,
         #[PhpStormStubsElementAvailable(from: '7.1')] int $mode = MT_RAND_MT19937
     ): void {}
 
@@ -33,7 +34,7 @@ namespace {
      * an alias of {@see mt_srand()}.
      * </p>
      * @link https://php.net/manual/en/function.srand.php
-     * @param int $seed <p>
+     * @param int|null $seed <p>
      * Optional seed value
      * </p>
      * @param int $mode [optional] <p>
@@ -42,24 +43,24 @@ namespace {
      * @return void
      */
     function srand(
-        int $seed = null,
+        #[LanguageLevelTypeAware(['8.3' => 'int|null'], default: 'int')] $seed = null,
         #[PhpStormStubsElementAvailable(from: '7.1')] int $mode = MT_RAND_MT19937
     ): void {}
 
     /**
      * Generate a random integer
      * @link https://php.net/manual/en/function.rand.php
-     * @param int $min
+     * @param int $min [optional]
      * @param int $max [optional]
      * @return int A pseudo random value between min
      * (or 0) and max (or getrandmax, inclusive).
      */
-    function rand(int $min = null, int $max): int {}
+    function rand(int $min, int $max): int {}
 
     /**
      * Generate a random value via the Mersenne Twister Random Number Generator
      * @link https://php.net/manual/en/function.mt-rand.php
-     * @param int $min <p>
+     * @param int $min [optional] <p>
      * Optional lowest value to be returned (default: 0)
      * </p>
      * @param int $max [optional] <p>
@@ -68,7 +69,7 @@ namespace {
      * @return int A random integer value between min (or 0)
      * and max (or mt_getrandmax, inclusive)
      */
-    function mt_rand(int $min = null, int $max): int {}
+    function mt_rand(int $min, int $max): int {}
 
     /**
      * Show largest possible random value
@@ -92,7 +93,7 @@ namespace {
      * @param int $length The length of the random string that should be returned in bytes.
      * @return string Returns a string containing the requested number of cryptographically secure random bytes.
      * @since 7.0
-     * @throws Exception if an appropriate source of randomness cannot be found.
+     * @throws Random\RandomException if an appropriate source of randomness cannot be found.
      */
     function random_bytes(int $length): string {}
 
@@ -103,7 +104,7 @@ namespace {
      * @param int $max The highest value to be returned, which must be less than or equal to PHP_INT_MAX.
      * @return int Returns a cryptographically secure random integer in the range min to max, inclusive.
      * @since 7.0
-     * @throws Exception if an appropriate source of randomness cannot be found.
+     * @throws Random\RandomException if an appropriate source of randomness cannot be found.
      */
     function random_int(int $min, int $max): int {}
 }
@@ -214,6 +215,21 @@ namespace Random
         public function __serialize(): array {}
 
         public function __unserialize(array $data): void {}
+
+        /**
+         * @since 8.3
+         */
+        public function nextFloat(): float {}
+
+        /**
+         * @since 8.3
+         */
+        public function getFloat(float $min, float $max, IntervalBoundary $boundary = IntervalBoundary::ClosedOpen): float {}
+
+        /**
+         * @since 8.3
+         */
+        public function getBytesFromString(string $string, int $length): string {}
     }
 
     /**
@@ -230,4 +246,19 @@ namespace Random
      * @since 8.2
      */
     class RandomException extends Exception {}
+
+    /**
+     * @since 8.3
+     */
+    enum IntervalBoundary
+    {
+        public string $name;
+
+        case ClosedOpen;
+        case ClosedClosed;
+        case OpenClosed;
+        case OpenOpen;
+
+        public static function cases(): array {}
+    }
 }

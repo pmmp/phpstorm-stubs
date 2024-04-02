@@ -7,6 +7,11 @@ use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
 use JetBrains\PhpStorm\Internal\TentativeType;
 
 /**
+ * @since 8.3
+ */
+class SQLite3Exception extends \Exception {}
+
+/**
  * A class that interfaces SQLite 3 databases.
  * @link https://php.net/manual/en/class.sqlite3.php
  */
@@ -76,7 +81,7 @@ class SQLite3
         #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $flags,
         #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $encryptionKey,
         #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = SQLITE3_OPEN_READWRITE|SQLITE3_OPEN_CREATE,
-        #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $encryptionKey = null
+        #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $encryptionKey = ''
     ): void {}
 
     /**
@@ -365,7 +370,7 @@ class SQLite3
         #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $flags,
         #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $encryptionKey,
         #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = SQLITE3_OPEN_READWRITE|SQLITE3_OPEN_CREATE,
-        #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $encryptionKey = null
+        #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $encryptionKey = ''
     ) {}
 
     /**
