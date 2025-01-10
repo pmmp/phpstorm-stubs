@@ -6,7 +6,7 @@ final class DataDecodeException extends \RuntimeException{
 }
 
 namespace pmmp\encoding {
-abstract class BaseByteBuffer{
+final class ByteBuffer{
 
 	public function __construct(string $buffer = ''){}
 
@@ -43,103 +43,126 @@ abstract class BaseByteBuffer{
 }
 
 namespace pmmp\encoding {
-final class ByteBuffer extends \pmmp\encoding\BaseByteBuffer{
+final class Byte{
 
-	public function readUnsignedByte() : int{}
+	private function __construct(){}
 
-	public function writeUnsignedByte(int $value) : void{}
+	public static function readUnsigned(\pmmp\encoding\ByteBuffer $buffer) : int{}
 
-	public function readSignedByte() : int{}
+	public static function writeUnsigned(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
 
-	public function writeSignedByte(int $value) : void{}
+	public static function readSigned(\pmmp\encoding\ByteBuffer $buffer) : int{}
 
-	public function readUnsignedShortLE() : int{}
+	public static function writeSigned(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
+}
+}
 
-	public function readUnsignedShortBE() : int{}
+namespace pmmp\encoding {
+final class BE{
 
-	public function readSignedShortLE() : int{}
+	private function __construct(){}
 
-	public function readSignedShortBE() : int{}
+	public static function readUnsignedShort(\pmmp\encoding\ByteBuffer $buffer) : int{}
 
-	public function writeUnsignedShortLE(int $value) : void{}
+	public static function writeUnsignedShort(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
 
-	public function writeUnsignedShortBE(int $value) : void{}
+	public static function readSignedShort(\pmmp\encoding\ByteBuffer $buffer) : int{}
 
-	public function writeSignedShortLE(int $value) : void{}
+	public static function writeSignedShort(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
 
-	public function writeSignedShortBE(int $value) : void{}
+	public static function readUnsignedInt(\pmmp\encoding\ByteBuffer $buffer) : int{}
 
-	public function readUnsignedIntLE() : int{}
+	public static function writeUnsignedInt(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
 
-	public function readUnsignedIntBE() : int{}
+	public static function readSignedInt(\pmmp\encoding\ByteBuffer $buffer) : int{}
 
-	public function readSignedIntLE() : int{}
+	public static function writeSignedInt(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
 
-	public function readSignedIntBE() : int{}
+	public static function readSignedLong(\pmmp\encoding\ByteBuffer $buffer) : int{}
 
-	public function writeUnsignedIntLE(int $value) : void{}
+	public static function writeSignedLong(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
 
-	public function writeUnsignedIntBE(int $value) : void{}
+	public static function readFloat(\pmmp\encoding\ByteBuffer $buffer) : float{}
 
-	public function writeSignedIntLE(int $value) : void{}
+	public static function writeFloat(\pmmp\encoding\ByteBuffer $buffer, float $value) : void{}
 
-	public function writeSignedIntBE(int $value) : void{}
+	public static function readDouble(\pmmp\encoding\ByteBuffer $buffer) : float{}
 
-	public function readSignedLongLE() : int{}
+	public static function writeDouble(\pmmp\encoding\ByteBuffer $buffer, float $value) : void{}
 
-	public function readSignedLongBE() : int{}
+	public static function readUnsignedTriad(\pmmp\encoding\ByteBuffer $buffer) : int{}
 
-	public function writeSignedLongLE(int $value) : void{}
+	public static function writeUnsignedTriad(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
 
-	public function writeSignedLongBE(int $value) : void{}
+	public static function readSignedTriad(\pmmp\encoding\ByteBuffer $buffer) : int{}
 
-	public function readFloatLE() : float{}
+	public static function writeSignedTriad(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
+}
+}
 
-	public function readFloatBE() : float{}
+namespace pmmp\encoding {
+final class LE{
 
-	public function writeFloatLE(float $value) : void{}
+	private function __construct(){}
 
-	public function writeFloatBE(float $value) : void{}
+	public static function readUnsignedShort(\pmmp\encoding\ByteBuffer $buffer) : int{}
 
-	public function readDoubleLE() : float{}
+	public static function writeUnsignedShort(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
 
-	public function readDoubleBE() : float{}
+	public static function readSignedShort(\pmmp\encoding\ByteBuffer $buffer) : int{}
 
-	public function writeDoubleLE(float $value) : void{}
+	public static function writeSignedShort(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
 
-	public function writeDoubleBE(float $value) : void{}
+	public static function readUnsignedInt(\pmmp\encoding\ByteBuffer $buffer) : int{}
 
-	public function readUnsignedVarInt() : int{}
+	public static function writeUnsignedInt(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
 
-	public function readSignedVarInt() : int{}
+	public static function readSignedInt(\pmmp\encoding\ByteBuffer $buffer) : int{}
 
-	public function writeUnsignedVarInt(int $value) : void{}
+	public static function writeSignedInt(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
 
-	public function writeSignedVarInt(int $value) : void{}
+	public static function readSignedLong(\pmmp\encoding\ByteBuffer $buffer) : int{}
 
-	public function readUnsignedVarLong() : int{}
+	public static function writeSignedLong(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
 
-	public function readSignedVarLong() : int{}
+	public static function readFloat(\pmmp\encoding\ByteBuffer $buffer) : float{}
 
-	public function writeUnsignedVarLong(int $value) : void{}
+	public static function writeFloat(\pmmp\encoding\ByteBuffer $buffer, float $value) : void{}
 
-	public function writeSignedVarLong(int $value) : void{}
+	public static function readDouble(\pmmp\encoding\ByteBuffer $buffer) : float{}
 
-	public function readUnsignedTriadBE() : int{}
+	public static function writeDouble(\pmmp\encoding\ByteBuffer $buffer, float $value) : void{}
 
-	public function readUnsignedTriadLE() : int{}
+	public static function readUnsignedTriad(\pmmp\encoding\ByteBuffer $buffer) : int{}
 
-	public function writeUnsignedTriadBE(int $value) : void{}
+	public static function writeUnsignedTriad(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
 
-	public function writeUnsignedTriadLE(int $value) : void{}
+	public static function readSignedTriad(\pmmp\encoding\ByteBuffer $buffer) : int{}
 
-	public function readSignedTriadBE() : int{}
+	public static function writeSignedTriad(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
+}
+}
 
-	public function readSignedTriadLE() : int{}
+namespace pmmp\encoding {
+final class VarInt{
 
-	public function writeSignedTriadBE(int $value) : void{}
+	private function __construct(){}
 
-	public function writeSignedTriadLE(int $value) : void{}
+	public static function readUnsignedInt(\pmmp\encoding\ByteBuffer $buffer) : int{}
+
+	public static function readSignedInt(\pmmp\encoding\ByteBuffer $buffer) : int{}
+
+	public static function writeUnsignedInt(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
+
+	public static function writeSignedInt(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
+
+	public static function readUnsignedLong(\pmmp\encoding\ByteBuffer $buffer) : int{}
+
+	public static function readSignedLong(\pmmp\encoding\ByteBuffer $buffer) : int{}
+
+	public static function writeUnsignedLong(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
+
+	public static function writeSignedLong(\pmmp\encoding\ByteBuffer $buffer, int $value) : void{}
 }
 }
 
