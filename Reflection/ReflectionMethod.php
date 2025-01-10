@@ -189,8 +189,10 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * Returns a dynamically created closure for the method
      *
      * @link https://php.net/manual/en/reflectionmethod.getclosure.php
-     * @param object $object Forbidden for static methods, required for other methods or nothing.
-     * @return Closure|null Returns {@see Closure} or {@see null} in case of an error.
+     * @param object|null $object Forbidden for static methods, required for other methods or nothing.
+     * @return Closure Returns the newly created {@see Closure}.
+     * @throws ValueError if object is null but the method is non-static.
+     * @throws ReflectionException if object is not an instance of the class this method was declared in.
      * @since 5.4
      */
     #[Pure]
@@ -280,9 +282,8 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * @link https://php.net/manual/en/reflectionmethod.setaccessible.php
      * @param bool $accessible {@see true} to allow accessibility, or {@see false}
      * @return void No value is returned.
-     * @since 5.3.2
      */
-    #[PhpStormStubsElementAvailable(to: "8.0")]
+    #[PhpStormStubsElementAvailable(from: "5.3", to: "8.0")]
     #[TentativeType]
     public function setAccessible(#[LanguageLevelTypeAware(['8.0' => 'bool'], default: '')] $accessible): void {}
 

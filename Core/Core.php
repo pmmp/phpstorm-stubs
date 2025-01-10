@@ -635,7 +635,8 @@ function get_class_methods(object|string $object_or_class): array {}
  * @return bool This function returns false if wrong <i>error_type</i> is
  * specified, true otherwise.
  */
-function trigger_error(string $message, int $error_level = E_USER_NOTICE): bool {}
+#[LanguageLevelTypeAware(['8.4' => 'true'], default: 'bool')]
+function trigger_error(string $message, int $error_level = E_USER_NOTICE) {}
 
 /**
  * Alias of <b>trigger_error</b>
@@ -645,7 +646,8 @@ function trigger_error(string $message, int $error_level = E_USER_NOTICE): bool 
  * @return bool This function returns false if wrong <i>error_type</i> is
  * specified, true otherwise.
  */
-function user_error(string $message, int $error_level = E_USER_NOTICE): bool {}
+#[LanguageLevelTypeAware(['8.4' => 'true'], default: 'bool')]
+function user_error(string $message, int $error_level = E_USER_NOTICE) {}
 
 /**
  * Sets a user-defined error handler function
@@ -668,6 +670,10 @@ function user_error(string $message, int $error_level = E_USER_NOTICE): bool {}
  * <i>errno</i>
  * The first parameter, <i>errno</i>, contains the
  * level of the error raised, as an integer.</p>
+ * The user function should stop execution if necessary by calling `exit()`.
+ * If the function returns a value other than false, script execution will
+ * continue with the next statement after the one that caused an error.
+ * If the function returns false, the standard PHP error handler is called.
  * @param int $error_levels [optional] <p>
  * Can be used to mask the triggering of the
  * <i>error_handler</i> function just like the error_reporting ini setting
@@ -680,8 +686,19 @@ function user_error(string $message, int $error_level = E_USER_NOTICE): bool {}
  * in case of an error such as an invalid callback. If the previous error handler
  * was a class method, this function will return an indexed array with the class
  * and the method name.
+ *
+ * Note that error_handler chaining is possible by passing the output value as a reference:
+ * ```
+ * $previousErrorHandler = set_error_handler(
+ *     static function (int $errNo, string $errstr, string $errFile, int $errLine) use (&$previousErrorHandler): bool {
+ *         // Handle specific scenarios
+ *
+ *         return $previousErrorHandler !== null ? (bool) $previousErrorHandler(...func_get_args()) : false;
+ *     }
+ * );
+ * ```
  */
-function set_error_handler(?callable $callback, int $error_levels = E_ALL|E_STRICT) {}
+function set_error_handler(?callable $callback, int $error_levels = E_ALL) {}
 
 /**
  * Restores the previous error handler function
@@ -1113,3 +1130,13 @@ function gc_mem_caches(): int {}
  */
 #[Pure(true)]
 function get_resources(?string $type): array {}
+
+/**
+ * @since 8.4
+ */
+function exit(string|int $status = 0): never {}
+
+/**
+ * @since 8.4
+ */
+function die(string|int $status = 0): never {}

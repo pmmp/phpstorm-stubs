@@ -923,7 +923,8 @@ function mb_send_mail(string $to, string $subject, string $message, array|string
     'substitute_character' => 'string',
     'strict_detection' => 'string',
 ])]
-function mb_get_info(string $type = 'all'): array|string|int|false {}
+#[LanguageLevelTypeAware(['8.2' => 'array|string|int|false|null'], default: 'array|string|int|false')]
+function mb_get_info(string $type = 'all') {}
 
 /**
  * Check if the string is valid for the specified encoding
@@ -1214,7 +1215,6 @@ function mb_ereg_search_getregs(): array|false {}
  * @return int
  */
 #[Pure]
-#[Deprecated(since: '7.3')]
 function mb_ereg_search_getpos(): int {}
 
 /**
@@ -1420,6 +1420,26 @@ function mb_str_split(string $string, int $length = 1, ?string $encoding) {}
  * @since 8.3
  */
 function mb_str_pad(string $string, int $length, string $pad_string = " ", int $pad_type = STR_PAD_RIGHT, ?string $encoding = null): string {}
+/**
+ * @since 8.4
+ */
+function mb_ucfirst(string $string, ?string $encoding = null): string {}
+/**
+ * @since 8.4
+ */
+function mb_lcfirst(string $string, ?string $encoding = null): string {}
+/**
+ * @since 8.4
+ */
+function mb_trim(string $string, ?string $characters = null, ?string $encoding = null): string {}
+/**
+ * @since 8.4
+ */
+function mb_ltrim(string $string, ?string $characters = null, ?string $encoding = null): string {}
+/**
+ * @since 8.4
+ */
+function mb_rtrim(string $string, ?string $characters = null, ?string $encoding = null): string {}
 
 /**
  * @removed 8.0
@@ -1460,6 +1480,6 @@ define('MB_CASE_FOLD_SIMPLE', 7);
 /**
  * @since 7.4
  */
-define('MB_ONIGURUMA_VERSION', '6.9.8');
+define('MB_ONIGURUMA_VERSION', '6.9.9');
 
 // End of mbstring v.

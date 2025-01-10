@@ -84,6 +84,7 @@ class SplFileInfo implements Stringable
      * @link https://php.net/manual/en/splfileinfo.getinode.php
      * @return int|false The inode number for the filesystem object on success, or <b>FALSE</b> on failure.
      * @since 5.1.2
+     * @throws \RuntimeException on error.
      */
     #[TentativeType]
     public function getInode(): int|false {}
@@ -93,6 +94,7 @@ class SplFileInfo implements Stringable
      * @link https://php.net/manual/en/splfileinfo.getsize.php
      * @return int|false The filesize in bytes on success, or <b>FALSE</b> on failure.
      * @since 5.1.2
+     * @throws \RuntimeException on error.
      */
     #[TentativeType]
     public function getSize(): int|false {}
@@ -102,6 +104,7 @@ class SplFileInfo implements Stringable
      * @link https://php.net/manual/en/splfileinfo.getowner.php
      * @return int|false The owner id in numerical format on success, or <b>FALSE</b> on failure.
      * @since 5.1.2
+     * @throws \RuntimeException on error.
      */
     #[TentativeType]
     public function getOwner(): int|false {}
@@ -111,6 +114,7 @@ class SplFileInfo implements Stringable
      * @link https://php.net/manual/en/splfileinfo.getgroup.php
      * @return int|false The group id in numerical format on success, or <b>FALSE</b> on failure.
      * @since 5.1.2
+     * @throws \RuntimeException on error.
      */
     #[TentativeType]
     public function getGroup(): int|false {}
@@ -120,6 +124,7 @@ class SplFileInfo implements Stringable
      * @link https://php.net/manual/en/splfileinfo.getatime.php
      * @return int|false The time the file was last accessed on success, or <b>FALSE</b> on failure.
      * @since 5.1.2
+     * @throws \RuntimeException on error.
      */
     #[TentativeType]
     public function getATime(): int|false {}
@@ -138,6 +143,7 @@ class SplFileInfo implements Stringable
      * @link https://php.net/manual/en/splfileinfo.getctime.php
      * @return int|false The last change time, in a Unix timestamp on success, or <b>FALSE</b> on failure.
      * @since 5.1.2
+     * @throws \RuntimeException on error.
      */
     #[TentativeType]
     public function getCTime(): int|false {}
@@ -149,6 +155,7 @@ class SplFileInfo implements Stringable
      * May be one of file, link,
      * or dir
      * @since 5.1.2
+     * @throws \RuntimeException on error.
      */
     #[TentativeType]
     public function getType(): string|false {}
@@ -212,6 +219,7 @@ class SplFileInfo implements Stringable
      * @link https://php.net/manual/en/splfileinfo.getlinktarget.php
      * @return string|false The target of the filesystem link on success, or <b>FALSE</b> on failure.
      * @since 5.2.2
+     * @throws \RuntimeException on error.
      */
     #[TentativeType]
     public function getLinkTarget(): string|false {}
@@ -227,11 +235,12 @@ class SplFileInfo implements Stringable
 
     /**
      * Gets an SplFileInfo object for the file
+     * @template T of SplFileInfo
      * @link https://php.net/manual/en/splfileinfo.getfileinfo.php
-     * @param string $class [optional] <p>
+     * @param class-string<T> $class [optional] <p>
      * Name of an <b>SplFileInfo</b> derived class to use.
      * </p>
-     * @return SplFileInfo An <b>SplFileInfo</b> object created for the file.
+     * @return T An <b>SplFileInfo</b> object created for the file.
      * @since 5.1.2
      */
     #[TentativeType]
@@ -239,11 +248,12 @@ class SplFileInfo implements Stringable
 
     /**
      * Gets an SplFileInfo object for the path
+     * @template T of SplFileInfo
      * @link https://php.net/manual/en/splfileinfo.getpathinfo.php
-     * @param string $class [optional] <p>
+     * @param class-string<T> $class [optional] <p>
      * Name of an <b>SplFileInfo</b> derived class to use.
      * </p>
-     * @return SplFileInfo|null A <b>SplFileInfo</b> object for the parent path of the file on success, or <b>NULL</b> on failure.
+     * @return T|null A <b>SplFileInfo</b> object for the parent path of the file on success, or <b>NULL</b> on failure.
      * @since 5.1.2
      */
     #[TentativeType]
@@ -263,6 +273,7 @@ class SplFileInfo implements Stringable
      * </p>
      * @return SplFileObject The opened file as an <b>SplFileObject</b> object.
      * @since 5.1.2
+     * @throws \RuntimeException If the file cannot be opened (e.g. insufficient access rights).
      */
     #[TentativeType]
     public function openFile(
@@ -273,8 +284,9 @@ class SplFileInfo implements Stringable
 
     /**
      * Sets the class name used with <b>SplFileInfo::openFile</b>
+     * @template T of SplFileObject
      * @link https://php.net/manual/en/splfileinfo.setfileclass.php
-     * @param string $class [optional] <p>
+     * @param class-string<T> $class [optional] <p>
      * The class name to use when openFile() is called.
      * </p>
      * @return void
@@ -285,8 +297,9 @@ class SplFileInfo implements Stringable
 
     /**
      * Sets the class used with getFileInfo and getPathInfo
+     * @template T of SplFileInfo
      * @link https://php.net/manual/en/splfileinfo.setinfoclass.php
-     * @param string $class [optional] <p>
+     * @param class-string<T> $class [optional] <p>
      * The class name to use.
      * </p>
      * @return void
@@ -645,6 +658,8 @@ class SplFileObject extends SplFileInfo implements RecursiveIterator, SeekableIt
      * Rewind the file to the first line
      * @link https://php.net/manual/en/splfileobject.rewind.php
      * @return void
+     *
+     * @throws RuntimeException If cannot be rewound
      */
     #[TentativeType]
     public function rewind(): void {}
@@ -669,6 +684,8 @@ class SplFileObject extends SplFileInfo implements RecursiveIterator, SeekableIt
      * Gets line from file
      * @link https://php.net/manual/en/splfileobject.fgets.php
      * @return string a string containing the next line from the file.
+     *
+     * @throws RuntimeException If the file cannot be read
      */
     #[TentativeType]
     public function fgets(): string {}
@@ -970,6 +987,8 @@ class SplFileObject extends SplFileInfo implements RecursiveIterator, SeekableIt
      * The maximum length of a line.
      * </p>
      * @return void
+     *
+     * @throws DomainException When <i>maxLength</i> is less than zero.
      */
     #[TentativeType]
     public function setMaxLineLen(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $maxLength): void {}
@@ -1009,6 +1028,7 @@ class SplFileObject extends SplFileInfo implements RecursiveIterator, SeekableIt
      * The zero-based line number to seek to.
      * </p>
      * @return void
+     * @throws LogicException If the <i>line</i> is negative
      */
     #[TentativeType]
     public function seek(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $line): void {}
@@ -1063,7 +1083,7 @@ class SplDoublyLinkedList implements Iterator, Countable, ArrayAccess, Serializa
     /**
      * Add/insert a new value at the specified index
      * @param mixed $index The index where the new value is to be inserted.
-     * @param mixed $value The new value for the index.
+     * @param TValue $value The new value for the index.
      * @return void
      * @link https://php.net/spldoublylinkedlist.add
      * @since 5.5
@@ -1077,7 +1097,7 @@ class SplDoublyLinkedList implements Iterator, Countable, ArrayAccess, Serializa
     /**
      * Pops a node from the end of the doubly linked list
      * @link https://php.net/manual/en/spldoublylinkedlist.pop.php
-     * @return mixed The value of the popped node.
+     * @return TValue The value of the popped node.
      */
     #[TentativeType]
     public function pop(): mixed {}
@@ -1085,7 +1105,7 @@ class SplDoublyLinkedList implements Iterator, Countable, ArrayAccess, Serializa
     /**
      * Shifts a node from the beginning of the doubly linked list
      * @link https://php.net/manual/en/spldoublylinkedlist.shift.php
-     * @return mixed The value of the shifted node.
+     * @return TValue The value of the shifted node.
      */
     #[TentativeType]
     public function shift(): mixed {}
@@ -1093,7 +1113,7 @@ class SplDoublyLinkedList implements Iterator, Countable, ArrayAccess, Serializa
     /**
      * Pushes an element at the end of the doubly linked list
      * @link https://php.net/manual/en/spldoublylinkedlist.push.php
-     * @param mixed $value <p>
+     * @param TValue $value <p>
      * The value to push.
      * </p>
      * @return void
@@ -1104,7 +1124,7 @@ class SplDoublyLinkedList implements Iterator, Countable, ArrayAccess, Serializa
     /**
      * Prepends the doubly linked list with an element
      * @link https://php.net/manual/en/spldoublylinkedlist.unshift.php
-     * @param mixed $value <p>
+     * @param TValue $value <p>
      * The value to unshift.
      * </p>
      * @return void
@@ -1115,7 +1135,7 @@ class SplDoublyLinkedList implements Iterator, Countable, ArrayAccess, Serializa
     /**
      * Peeks at the node from the end of the doubly linked list
      * @link https://php.net/manual/en/spldoublylinkedlist.top.php
-     * @return mixed The value of the last node.
+     * @return TValue The value of the last node.
      */
     #[TentativeType]
     public function top(): mixed {}
@@ -1123,7 +1143,7 @@ class SplDoublyLinkedList implements Iterator, Countable, ArrayAccess, Serializa
     /**
      * Peeks at the node from the beginning of the doubly linked list
      * @link https://php.net/manual/en/spldoublylinkedlist.bottom.php
-     * @return mixed The value of the first node.
+     * @return TValue The value of the first node.
      */
     #[TentativeType]
     public function bottom(): mixed {}
@@ -1182,7 +1202,7 @@ class SplDoublyLinkedList implements Iterator, Countable, ArrayAccess, Serializa
      * @param mixed $index <p>
      * The index with the value.
      * </p>
-     * @return mixed The value at the specified <i>index</i>.
+     * @return TValue The value at the specified <i>index</i>.
      */
     #[TentativeType]
     public function offsetGet($index): mixed {}
@@ -1193,7 +1213,7 @@ class SplDoublyLinkedList implements Iterator, Countable, ArrayAccess, Serializa
      * @param mixed $index <p>
      * The index being set.
      * </p>
-     * @param mixed $value <p>
+     * @param TValue $value <p>
      * The new value for the <i>index</i>.
      * </p>
      * @return void
@@ -1223,7 +1243,7 @@ class SplDoublyLinkedList implements Iterator, Countable, ArrayAccess, Serializa
     /**
      * Return current array entry
      * @link https://php.net/manual/en/spldoublylinkedlist.current.php
-     * @return mixed The current node value.
+     * @return TValue The current node value.
      */
     #[TentativeType]
     public function current(): mixed {}
@@ -1386,7 +1406,8 @@ abstract class SplHeap implements Iterator, Countable
      * @return bool
      */
     #[TentativeType]
-    public function insert(#[LanguageLevelTypeAware(['8.0' => 'mixed'], default: '')] $value): bool {}
+    #[LanguageLevelTypeAware(['8.4' => 'true'], default: 'bool')]
+    public function insert(#[LanguageLevelTypeAware(['8.0' => 'mixed'], default: '')] $value) {}
 
     /**
      * Peeks at the node from the top of the heap
@@ -1458,7 +1479,8 @@ abstract class SplHeap implements Iterator, Countable
      * @return bool
      */
     #[TentativeType]
-    public function recoverFromCorruption(): bool {}
+    #[LanguageLevelTypeAware(['8.4' => 'true'], default: 'bool')]
+    public function recoverFromCorruption() {}
 
     /**
      * Compare elements in order to place them correctly in the heap while sifting up.
@@ -1673,10 +1695,11 @@ class SplPriorityQueue implements Iterator, Countable
      * </p>
      * @return true
      */
+    #[TentativeType]
     public function insert(
         #[LanguageLevelTypeAware(['8.0' => 'mixed'], default: '')] $value,
         #[LanguageLevelTypeAware(['8.0' => 'mixed'], default: '')] $priority
-    ) {}
+    ): true {}
 
     /**
      * Sets the mode of extraction
@@ -1767,9 +1790,9 @@ class SplPriorityQueue implements Iterator, Countable
     /**
      * Recover from the corrupted state and allow further actions on the queue.
      * @link https://php.net/manual/en/splpriorityqueue.recoverfromcorruption.php
-     * @return void
      */
-    public function recoverFromCorruption() {}
+    #[TentativeType]
+    public function recoverFromCorruption(): true {}
 
     /**
      * @return bool
@@ -1862,6 +1885,8 @@ class SplFixedArray implements Iterator, ArrayAccess, Countable, IteratorAggrega
      * </p>
      * @return bool
      */
+    #[LanguageLevelTypeAware(['8.4' => 'true'], default: 'bool')]
+    #[TentativeType]
     public function setSize(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $size) {}
 
     /**
@@ -1948,22 +1973,22 @@ class SplFixedArray implements Iterator, ArrayAccess, Countable, IteratorAggrega
     public function valid(): bool {}
 
     #[TentativeType]
+    #[Deprecated("The function is deprecated", since: "8.4")]
     public function __wakeup(): void {}
 
     #[PhpStormStubsElementAvailable(from: '8.2')]
     public function __serialize(): array {}
 
-    /**
-     * @param array $data
-     */
     #[PhpStormStubsElementAvailable(from: '8.2')]
     public function __unserialize(array $data): void {}
 
     /**
+     * @since 8.0
      * @return Iterator<int, TValue>
      */
     public function getIterator(): Iterator {}
 
+    #[PhpStormStubsElementAvailable(from: '8.1')]
     public function jsonSerialize(): array {}
 }
 
@@ -2034,7 +2059,7 @@ interface SplSubject
  * @template-implements Iterator<int, TObject>
  * @template-implements ArrayAccess<TObject, TValue>
  */
-class SplObjectStorage implements Countable, Iterator, Serializable, ArrayAccess
+class SplObjectStorage implements Countable, SeekableIterator, Serializable, ArrayAccess
 {
     /**
      * Adds an object in the storage
@@ -2281,6 +2306,11 @@ class SplObjectStorage implements Countable, Iterator, Serializable, ArrayAccess
      */
     #[TentativeType]
     public function __debugInfo(): array {}
+
+    /**
+     * @since 8.4
+     */
+    public function seek(int $offset): void {}
 }
 
 /**

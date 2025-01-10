@@ -278,8 +278,9 @@ function array_unique(array $array, int $flags = SORT_STRING): array {}
  * The array with main values to check.
  * </p>
  * @param array ...$arrays arrays to compare values against.
- * @return array an array containing all of the values in
- * array1 whose values exist in all of the parameters.
+ * @return array an array containing all the values of
+ * <code>array</code> that are present in all the arguments.
+ * Note that keys are preserved.
  * @meta
  */
 #[Pure]
@@ -292,8 +293,8 @@ function array_intersect(array $array, #[PhpStormStubsElementAvailable(from: '5.
  * The array with main keys to check.
  * </p>
  * @param array ...$arrays
- * @return array an associative array containing all the values and keys of
- * array1 which have keys that are present in all
+ * @return array an array containing all the entries of
+ * <code>array</code>  which have keys that are present in all the
  * arguments.
  * @meta
  */
@@ -313,7 +314,8 @@ function array_intersect_key(array $array, #[PhpStormStubsElementAvailable(from:
  * User supplied callback function to do the comparison.
  * </p>
  * @param ...$rest [optional]
- * @return array the values of array1 whose keys exist
+ * @return array an array containing all the values of
+ * <code>array</code> which have matching keys that are present
  * in all the arguments.
  * @meta
  */
@@ -343,7 +345,7 @@ function array_intersect_ukey(
  * the first argument is considered to be respectively less than, equal
  * to, or greater than the second.
  * </p>
- * @return array an array containing all the values and keys of array1
+ * @return array an array containing all the values of <code>array</code>
  * that are present in all the arguments.
  * @meta
  */
@@ -361,8 +363,8 @@ function array_uintersect(
  * The array with main values to check.
  * </p>
  * @param array $arrays
- * @return array an associative array containing all the values and keys in
- * array1 that are present in all of the arguments.
+ * @return array an associative array containing all the values in
+ * <code>array</code> that are present in all of the arguments.
  * @meta
  */
 #[Pure]
@@ -385,8 +387,8 @@ function array_intersect_assoc(array $array, #[PhpStormStubsElementAvailable(fro
  * second.
  * </p>
  * @param array ...$rest
- * @return array an array containing all the values and keys of
- * array1 that are present in all the arguments.
+ * @return array an array containing all the values of
+ * <code>array</code> that are present in all the arguments.
  * @meta
  */
 function array_uintersect_assoc(
@@ -409,8 +411,7 @@ function array_uintersect_assoc(
  * User supplied callback function to do the comparison.
  * </p>
  * @param array ...$rest
- * @return array the values of array1 whose values exist
- * in all of the arguments.
+ * @return array the values of <code>array</code> whose values exist in all of the arguments.
  * @meta
  */
 function array_intersect_uassoc(
@@ -461,7 +462,8 @@ function array_uintersect_uassoc(
  * </p>
  * @param array ...$arrays
  * @return array an array containing all the entries from
- * array1 that are not present in any of the other arrays.
+ * <code>array</code> that are not present in any of the other
+ * arrays. Keys in the array <code>array</code> are preserved.
  * @meta
  */
 #[Pure]
@@ -476,9 +478,8 @@ function array_diff(array $array, #[PhpStormStubsElementAvailable(from: '5.3', t
  * @param array $arrays <p>
  * An array to compare against
  * </p>
- * @return array an array containing all the values and keys from
- * array1 whose keys are not present in any of the
- * other arrays.
+ * @return array an array containing all the entries from
+ * <code>array</code> whose keys are absent from all of the other arrays.
  * @meta
  */
 #[Pure]
@@ -500,8 +501,8 @@ function array_diff_key(array $array, #[PhpStormStubsElementAvailable(from: '5.3
  * be respectively less than, equal to, or greater than the second.
  * </p>
  * @param array ...$rest [optional]
- * @return array an array containing all the values and keys from
- * array1 that are not present in any of the other arrays.
+ * @return array an array containing all the entries from
+ * <code>array</code> that are not present in any of the other arrays.
  * @meta
  */
 function array_diff_ukey(
@@ -530,8 +531,8 @@ function array_diff_ukey(
  * to, or greater than the second.
  * </p>
  * @param array ...$rest [optional]
- * @return array an array containing all the values and keys of array1
- * that are not present in any of the other arguments.
+ * @return array an array containing all the values of
+ * <code>array</code> that are not present in any of the other arguments.
  * @meta
  */
 function array_udiff(
@@ -551,7 +552,7 @@ function array_udiff(
  * An array to compare against
  * </p>
  * @return array an array containing all the values from
- * array1 that are not present in any of the other arrays.
+ * <code>array</code> that are not present in any of the other arrays.
  * @meta
  */
 #[Pure]
@@ -580,8 +581,7 @@ function array_diff_assoc(
  * to, or greater than the second.
  * </p>
  * @param array ...$rest [optional]
- * @return array array_udiff_assoc returns an array
- * containing all the values and keys from array1
+ * @return array returns an array containing all the values from <code>array</code>
  * that are not present in any of the other arguments.
  * Note that the keys are used in the comparison unlike
  * array_diff and array_udiff.
@@ -615,7 +615,7 @@ function array_udiff_assoc(
  * </p>
  * @param array ...$rest [optional]
  * @return array an array containing all the values and keys from
- * array1 that are not present in any of the other arrays.
+ * <code>array</code> that are not present in any of the other arrays.
  * @meta
  */
 function array_diff_uassoc(
@@ -658,7 +658,7 @@ function array_diff_uassoc(
  * </p>
  * @param array ...$rest [optional]
  * @return array an array containing all the values and keys from
- * array1 that are not present in any of the other
+ * <code>array</code> that are not present in any of the other
  * arguments.
  * @meta
  */
@@ -1175,7 +1175,8 @@ function stream_filter_register(string $filter_name, string $class): bool {}
  * @param resource $brigade
  * @return object|null
  */
-function stream_bucket_make_writeable($brigade): ?object {}
+#[LanguageLevelTypeAware(["8.4" => "StreamBucket|null"], default: "object|null")]
+function stream_bucket_make_writeable($brigade) {}
 
 /**
  * Prepend bucket to brigade
@@ -1184,7 +1185,7 @@ function stream_bucket_make_writeable($brigade): ?object {}
  * @param object $bucket
  * @return void
  */
-function stream_bucket_prepend($brigade, object $bucket): void {}
+function stream_bucket_prepend($brigade, #[LanguageLevelTypeAware(['8.4' => 'StreamBucket'], default: 'object')] $bucket): void {}
 
 /**
  * Append bucket to brigade
@@ -1193,7 +1194,7 @@ function stream_bucket_prepend($brigade, object $bucket): void {}
  * @param object $bucket
  * @return void
  */
-function stream_bucket_append($brigade, object $bucket): void {}
+function stream_bucket_append($brigade, #[LanguageLevelTypeAware(['8.4' => 'StreamBucket'], default: 'object')] $bucket): void {}
 
 /**
  * Create a new bucket for use on the current stream
@@ -1202,7 +1203,8 @@ function stream_bucket_append($brigade, object $bucket): void {}
  * @param string $buffer
  * @return object
  */
-function stream_bucket_new($stream, string $buffer): object {}
+#[LanguageLevelTypeAware(["8.4" => "StreamBucket"], default: "object")]
+function stream_bucket_new($stream, string $buffer) {}
 
 /**
  * Add URL rewriter values

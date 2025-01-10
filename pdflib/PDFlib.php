@@ -6,7 +6,7 @@ class PDFlib
 {
     /**
      * Activates a previously created structure element or other content item.
-     * @param $id
+     * @param int $id
      *
      * @return bool
      *
@@ -396,6 +396,15 @@ class PDFlib
     public function close_pdi($doc) {}
 
     /**
+     * @param int $doc
+     *
+     * @return bool
+     *
+     * @link https://www.pdflib.com/fileadmin/pdflib/pdf/manuals/PDFlib-9.3.0-API-reference.pdf
+     */
+    public function close_pdi_document($doc) {}
+
+    /**
      * @return bool
      *
      * @link https://secure.php.net/manual/en/function.pdf-close.php
@@ -672,28 +681,28 @@ class PDFlib
      *
      * @link https://secure.php.net/manual/en/function.pdf-end-page.php
      */
-    public function end_page($p) {}
+    public function end_page() {}
 
     /**
      * @return bool
      *
      * @link https://secure.php.net/manual/en/function.pdf-end-pattern.php
      */
-    public function end_pattern($p) {}
+    public function end_pattern() {}
 
     /**
      * @return bool
      *
      * @link https://secure.php.net/manual/en/function.pdf-end-template.php
      */
-    public function end_template($p) {}
+    public function end_template() {}
 
     /**
      * @return bool
      *
      * @link https://secure.php.net/manual/en/function.pdf-endpath.php
      */
-    public function endpath($p) {}
+    public function endpath() {}
 
     /**
      * @param int $page
@@ -863,6 +872,16 @@ class PDFlib
     public function get_minorversion() {}
 
     /**
+     * @param string $keyword
+     * @param string $optlist
+     *
+     * @return float
+     *
+     * @link https://www.pdflib.com/fileadmin/pdflib/pdf/manuals/PDFlib-9.3.0-API-reference.pdf
+     */
+    public function get_option($keyword, $optlist) {}
+
+    /**
      * @param string $key
      * @param float $modifier
      *
@@ -897,6 +916,16 @@ class PDFlib
     public function get_pdi_value($key, $doc, $page, $reserved) {}
 
     /**
+     * @param string $keyword
+     * @param string $optlist
+     *
+     * @return float
+     *
+     * @link https://www.pdflib.com/fileadmin/pdflib/pdf/manuals/PDFlib-9.3.0-API-reference.pdf
+     */
+    public function get_string($keyword, $optlist) {}
+
+    /**
      * @param string $key
      * @param float $modifier
      *
@@ -918,6 +947,17 @@ class PDFlib
     public function info_font($font, $keyword, $optlist) {}
 
     /**
+     * @param int $image
+     * @param string $keyword
+     * @param string $optlist
+     *
+     * @return float
+     *
+     * @link https://www.pdflib.com/fileadmin/pdflib/pdf/manuals/PDFlib-9.3.0-API-reference.pdf
+     */
+    public function info_image($image, $keyword, $optlist) {}
+
+    /**
      * @param string $boxname
      * @param int $num
      * @param string $keyword
@@ -927,6 +967,49 @@ class PDFlib
      * @link https://secure.php.net/manual/en/function.pdf-info-matchbox.php
      */
     public function info_matchbox($boxname, $num, $keyword) {}
+
+    /**
+     * @param int $graphics
+     * @param string $keyword
+     * @param string $optlist
+     *
+     * @return float
+     *
+     * @link https://www.pdflib.com/fileadmin/pdflib/pdf/manuals/PDFlib-9.3.0-API-reference.pdf
+     */
+    public function info_graphics($graphics, $keyword, $optlist) {}
+
+    /**
+     * @param int $path
+     * @param string $keyword
+     * @param string $optlist
+     *
+     * @return float
+     *
+     * @link https://www.pdflib.com/fileadmin/pdflib/pdf/manuals/PDFlib-9.3.0-API-reference.pdf
+     */
+    public function info_path($path, $keyword, $optlist) {}
+
+    /**
+     * @param int $path
+     * @param string $keyword
+     * @param string $optlist
+     *
+     * @return float
+     *
+     * @link https://www.pdflib.com/fileadmin/pdflib/pdf/manuals/PDFlib-9.3.0-API-reference.pdf
+     */
+    public function info_pdi_page($page, $keyword, $optlist) {}
+
+    /**
+     * @param string $filename
+     * @param string $keyword
+     *
+     * @return float
+     *
+     * @link https://www.pdflib.com/fileadmin/pdflib/pdf/manuals/PDFlib-9.3.0-API-reference.pdf
+     */
+    public function info_pvf($filename, $keyword) {}
 
     /**
      * @param int $table
@@ -1187,6 +1270,15 @@ class PDFlib
     public function place_pdi_page($page, $x, $y, $sx, $sy) {}
 
     /**
+     * @param string $optlist
+     *
+     * @return bool
+     *
+     * @link https://www.pdflib.com/fileadmin/pdflib/pdf/manuals/PDFlib-9.3.0-API-reference.pdf
+     */
+    public function set_option($optlist) {}
+
+    /**
      * @param int $doc
      * @param int $page
      * @param string $optlist
@@ -1214,7 +1306,7 @@ class PDFlib
      *
      * @link https://secure.php.net/manual/en/function.pdf-restore.php
      */
-    public function restore($p) {}
+    public function restore() {}
 
     /**
      * @param string $optlist
@@ -1239,7 +1331,7 @@ class PDFlib
      *
      * @link https://secure.php.net/manual/en/function.pdf-save.php
      */
-    public function save($p) {}
+    public function save() {}
 
     /**
      * @param float $sx
@@ -1651,6 +1743,8 @@ class PDFlib
      */
     public function utf8_to_utf16($utf8string, $ordering) {}
 }
+
+class PDFlibException extends Exception {}
 
 /**
  * Activates a previously created structure element or other content item.
@@ -2088,6 +2182,16 @@ function PDF_close_pdi($pdf, $doc) {}
 function PDF_close($pdf) {}
 
 /**
+ * @param resource $pdf
+ * @param int $doc
+ *
+ * @return bool
+ *
+ * @link https://www.pdflib.com/fileadmin/pdflib/pdf/manuals/PDFlib-9.3.0-API-reference.pdf
+ */
+function PDF_close_pdi_document($pdf, $doc) {}
+
+/**
  * Close, fill and stroke current path
  * @param resource $pdf
  *
@@ -2401,40 +2505,40 @@ function PDF_end_layer($pdf) {}
 function PDF_end_page_ext($pdf, $optlist) {}
 
 /**
- * @param resource $p The PDF doc
+ * @param resource $pdf The PDF doc
  *
  * @return bool
  *
  * @link https://secure.php.net/manual/en/function.pdf-end-page.php
  */
-function PDF_end_page($p) {}
+function PDF_end_page($pdf) {}
 
 /**
- * @param resource $p The PDF doc
+ * @param resource $pdf The PDF doc
  *
  * @return bool
  *
  * @link https://secure.php.net/manual/en/function.pdf-end-pattern.php
  */
-function PDF_end_pattern($p) {}
+function PDF_end_pattern($pdf) {}
 
 /**
- * @param resource $p The PDF doc
+ * @param resource $pdf The PDF doc
  *
  * @return bool
  *
  * @link https://secure.php.net/manual/en/function.pdf-end-template.php
  */
-function PDF_end_template($p) {}
+function PDF_end_template($pdf) {}
 
 /**
- * @param resource $p The PDF doc
+ * @param resource $pdf The PDF doc
  *
  * @return bool
  *
  * @link https://secure.php.net/manual/en/function.pdf-endpath.php
  */
-function PDF_endpath($p) {}
+function PDF_endpath($pdf) {}
 
 /**
  * @param resource $pdf
@@ -2492,6 +2596,7 @@ function PDF_fill_textblock($pdf, $page, $blockname, $text, $optlist) {}
  * @link https://secure.php.net/manual/en/function.pdf-fill.php
  */
 function PDF_fill($pdf) {}
+
 /**
  * @param resource $pdf
  * @param string $fontname
@@ -2503,6 +2608,7 @@ function PDF_fill($pdf) {}
  * @link https://secure.php.net/manual/en/function.pdf-findfont.php(Dep)
  */
 function PDF_findfont($pdf, $fontname, $encoding, $embed) {}
+
 /**
  * @param resource $pdf
  * @param int $image
@@ -2515,6 +2621,7 @@ function PDF_findfont($pdf, $fontname, $encoding, $embed) {}
  * @link https://secure.php.net/manual/en/function.pdf-fit-image.php
  */
 function PDF_fit_image($pdf, $image, $x, $y, $optlist) {}
+
 /**
  * @param resource $pdf
  * @param int $page
@@ -2527,6 +2634,7 @@ function PDF_fit_image($pdf, $image, $x, $y, $optlist) {}
  * @link https://secure.php.net/manual/en/function.pdf-fit-pdi-page.php
  */
 function PDF_fit_pdi_page($pdf, $page, $x, $y, $optlist) {}
+
 /**
  * @param resource $pdf
  * @param int $table
@@ -2541,6 +2649,7 @@ function PDF_fit_pdi_page($pdf, $page, $x, $y, $optlist) {}
  * @link https://secure.php.net/manual/en/function.pdf-fit-table.php
  */
 function PDF_fit_table($pdf, $table, $llx, $lly, $urx, $ury, $optlist) {}
+
 /**
  * @param resource $pdf
  * @param int $textflow
@@ -2555,6 +2664,7 @@ function PDF_fit_table($pdf, $table, $llx, $lly, $urx, $ury, $optlist) {}
  * @link https://secure.php.net/manual/en/function.pdf-fit-textflow.php
  */
 function PDF_fit_textflow($pdf, $textflow, $llx, $lly, $urx, $ury, $optlist) {}
+
 /**
  * @param resource $pdf
  * @param string $text
@@ -2567,6 +2677,7 @@ function PDF_fit_textflow($pdf, $textflow, $llx, $lly, $urx, $ury, $optlist) {}
  * @link https://secure.php.net/manual/en/function.pdf-fit-textline.php
  */
 function PDF_fit_textline($pdf, $text, $x, $y, $optlist) {}
+
 /**
  * @param resource $pdf
  *
@@ -2575,6 +2686,7 @@ function PDF_fit_textline($pdf, $text, $x, $y, $optlist) {}
  * @link https://secure.php.net/manual/en/function.pdf-get-apiname.php
  */
 function PDF_get_apiname($pdf) {}
+
 /**
  * @param resource $pdf
  *
@@ -2583,6 +2695,7 @@ function PDF_get_apiname($pdf) {}
  * @link https://secure.php.net/manual/en/function.pdf-get-buffer.php
  */
 function PDF_get_buffer($pdf) {}
+
 /**
  * @param resource $pdf
  *
@@ -2591,6 +2704,7 @@ function PDF_get_buffer($pdf) {}
  * @link https://secure.php.net/manual/en/function.pdf-get-errmsg.php
  */
 function PDF_get_errmsg($pdf) {}
+
 /**
  * @param resource $pdf
  *
@@ -2599,18 +2713,32 @@ function PDF_get_errmsg($pdf) {}
  * @link https://secure.php.net/manual/en/function.pdf-get-errnum.php
  */
 function PDF_get_errnum($pdf) {}
+
 /**
  * @return int
  *
  * @link https://secure.php.net/manual/en/function.pdf-get-majorversion.php(dep)
  */
 function PDF_get_majorversion() {}
+
 /**
  * @return int
  *
  * @link https://secure.php.net/manual/en/function.pdf-get-minorversion.php(dep)
  */
 function PDF_get_minorversion() {}
+
+/**
+ * @param resource $pdf
+ * @param string $keyword
+ * @param string $optlist
+ *
+ * @return float
+ *
+ * @link https://www.pdflib.com/fileadmin/pdflib/pdf/manuals/PDFlib-9.3.0-API-reference.pdf
+ */
+function PDF_get_option($pdf, $keyword, $optlist) {}
+
 /**
  * @param resource $pdf
  * @param string $key
@@ -2621,6 +2749,7 @@ function PDF_get_minorversion() {}
  * @link https://secure.php.net/manual/en/function.pdf-get-parameter.php
  */
 function PDF_get_parameter($pdf, $key, $modifier) {}
+
 /**
  * @param resource $pdf
  * @param string $key
@@ -2633,6 +2762,7 @@ function PDF_get_parameter($pdf, $key, $modifier) {}
  * @link https://secure.php.net/manual/en/function.pdf-get-pdi-parameter.php
  */
 function PDF_get_pdi_parameter($pdf, $key, $doc, $page, $reserved) {}
+
 /**
  * @param resource $pdf
  * @param string $key
@@ -2645,6 +2775,18 @@ function PDF_get_pdi_parameter($pdf, $key, $doc, $page, $reserved) {}
  * @link https://secure.php.net/manual/en/function.pdf-get-pdi-value.php
  */
 function PDF_get_pdi_value($pdf, $key, $doc, $page, $reserved) {}
+
+/**
+ * @param resource $pdf
+ * @param string $keyword
+ * @param string $optlist
+ *
+ * @return float
+ *
+ * @link https://www.pdflib.com/fileadmin/pdflib/pdf/manuals/PDFlib-9.3.0-API-reference.pdf
+ */
+function PDF_get_string($keyword, $optlist) {}
+
 /**
  * @param resource $pdf
  * @param string $key
@@ -2655,6 +2797,7 @@ function PDF_get_pdi_value($pdf, $key, $doc, $page, $reserved) {}
  * @link https://secure.php.net/manual/en/function.pdf-get-value.php
  */
 function PDF_get_value($pdf, $key, $modifier) {}
+
 /**
  * @param resource $pdf
  * @param int $font
@@ -2666,6 +2809,64 @@ function PDF_get_value($pdf, $key, $modifier) {}
  * @link https://secure.php.net/manual/en/function.pdf-info-font.php
  */
 function PDF_info_font($pdf, $font, $keyword, $optlist) {}
+
+/**
+ * @param resource $pdf
+ * @param int $image
+ * @param string $keyword
+ * @param string $optlist
+ *
+ * @return float
+ *
+ * @link https://www.pdflib.com/fileadmin/pdflib/pdf/manuals/PDFlib-9.3.0-API-reference.pdf
+ */
+function PDF_info_image($pdf, $image, $keyword, $optlist) {}
+
+/**
+ * @param resource $pdf
+ * @param int $graphics
+ * @param string $keyword
+ * @param string $optlist
+ *
+ * @return float
+ *
+ * @link https://www.pdflib.com/fileadmin/pdflib/pdf/manuals/PDFlib-9.3.0-API-reference.pdf
+ */
+function PDF_info_graphics($pdf, $graphics, $keyword, $optlist) {}
+
+/**
+ * @param resource $pdf
+ * @param int $path
+ * @param string $keyword
+ * @param string $optlist
+ *
+ * @return float
+ *
+ * @link https://www.pdflib.com/fileadmin/pdflib/pdf/manuals/PDFlib-9.3.0-API-reference.pdf
+ */
+function PDF_info_path($pdf, $path, $keyword, $optlist) {}
+
+/**
+ * @param resource $pdf
+ * @param int $path
+ * @param string $keyword
+ * @param string $optlist
+ *
+ * @return float
+ *
+ * @link https://www.pdflib.com/fileadmin/pdflib/pdf/manuals/PDFlib-9.3.0-API-reference.pdf
+ */
+function PDF_info_pdi_page($pdf, $page, $keyword, $optlist) {}
+
+/**
+ * @param resource $pdf
+ * @param string $filename
+ * @param string $keyword
+ *
+ * @return float
+ */
+function PDF_info_pvf($pdf, $filename, $keyword) {}
+
 /**
  * @param resource $pdf
  * @param string $boxname
@@ -2677,6 +2878,7 @@ function PDF_info_font($pdf, $font, $keyword, $optlist) {}
  * @link https://secure.php.net/manual/en/function.pdf-info-matchbox.php
  */
 function PDF_info_matchbox($pdf, $boxname, $num, $keyword) {}
+
 /**
  * @param resource $pdf
  * @param int $table
@@ -2687,6 +2889,7 @@ function PDF_info_matchbox($pdf, $boxname, $num, $keyword) {}
  * @link https://secure.php.net/manual/en/function.pdf-info-table.php
  */
 function PDF_info_table($pdf, $table, $keyword) {}
+
 /**
  * @param resource $pdf
  * @param int $textflow
@@ -2992,13 +3195,13 @@ function PDF_process_pdi($pdf, $doc, $page, $optlist) {}
 function PDF_rect($pdf, $x, $y, $width, $height) {}
 
 /**
- * @param resource $p The PDF doc
+ * @param resource $pdf The PDF doc
  *
  * @return bool
  *
  * @link https://secure.php.net/manual/en/function.pdf-restore.php
  */
-function PDF_restore($p) {}
+function PDF_restore($pdf) {}
 
 /**
  * @param resource $pdf
@@ -3021,13 +3224,13 @@ function PDF_resume_page($pdf, $optlist) {}
 function PDF_rotate($pdf, $phi) {}
 
 /**
- * @param resource $p The PDF doc
+ * @param resource $pdf The PDF doc
  *
  * @return bool
  *
  * @link https://secure.php.net/manual/en/function.pdf-save.php
  */
-function PDF_save($p) {}
+function PDF_save($pdf) {}
 
 /**
  * @param resource $pdf
@@ -3108,6 +3311,16 @@ function PDF_set_layer_dependency($pdf, $type, $optlist) {}
 
 /**
  * @param resource $pdf
+ * @param string $optlist
+ *
+ * @return bool
+ *
+ * @link https://www.pdflib.com/fileadmin/pdflib/pdf/manuals/PDFlib-9.3.0-API-reference.pdf
+ */
+function PDF_set_option($pdf, $optlist) {}
+
+/**
+ * @param resource $pdf
  * @param string $key
  * @param string $value
  *
@@ -3116,6 +3329,16 @@ function PDF_set_layer_dependency($pdf, $type, $optlist) {}
  * @link https://secure.php.net/manual/en/function.pdf-set-parameter.php
  */
 function PDF_set_parameter($pdf, $key, $value) {}
+
+/**
+ * @param resource $pdf
+ * @param string $optlist
+ *
+ * @return bool
+ *
+ * @link https://www.pdflib.com/fileadmin/pdflib/pdf/manuals/PDFlib-9.3.0-API-reference.pdf
+ */
+function PDF_set_text_option($pdf, $optlist) {}
 
 /**
  * @param resource $pdf
@@ -3419,13 +3642,13 @@ function PDF_skew($pdf, $alpha, $beta) {}
 function PDF_stringwidth($pdf, $text, $font, $fontsize) {}
 
 /**
- * @param resource $p The PDF doc
+ * @param resource $pdf The PDF doc
  *
  * @return bool
  *
  * @link https://secure.php.net/manual/en/function.pdf-stroke.php
  */
-function PDF_stroke($p) {}
+function PDF_stroke($pdf) {}
 
 /**
  * @param resource $pdf

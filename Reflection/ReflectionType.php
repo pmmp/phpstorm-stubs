@@ -1,6 +1,5 @@
 <?php
 
-use JetBrains\PhpStorm\Deprecated;
 use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
 use JetBrains\PhpStorm\Internal\TentativeType;
 use JetBrains\PhpStorm\Pure;
@@ -43,7 +42,6 @@ abstract class ReflectionType implements Stringable
      * @since 7.0
      * @see ReflectionNamedType::getName()
      */
-    #[Deprecated(since: "7.1")]
     public function __toString(): string {}
 
     /**

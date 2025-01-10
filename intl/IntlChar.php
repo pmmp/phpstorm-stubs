@@ -677,6 +677,21 @@ class IntlChar
     public const NO_NUMERIC_VALUE = -123456789;
 
     /**
+     * @since 8.4
+     */
+    public const PROPERTY_IDS_UNARY_OPERATOR = 72;
+
+    /**
+     * @since 8.4
+     */
+    public const PROPERTY_ID_COMPAT_MATH_START = 73;
+
+    /**
+     * @since 8.4
+     */
+    public const PROPERTY_ID_COMPAT_MATH_CONTINUE = 74;
+
+    /**
      * Check a binary Unicode property for a code point
      * @link https://php.net/manual/en/intlchar.hasbinaryproperty.php
      * @param int|string $codepoint The integer codepoint value (e.g. 0x2603 for U+2603 SNOWMAN), or the character encoded as a UTF-8 string (e.g. "\u{2603}")

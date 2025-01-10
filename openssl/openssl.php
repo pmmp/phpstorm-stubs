@@ -142,7 +142,7 @@ function openssl_pkey_get_public(#[LanguageLevelTypeAware(['8.0' => 'OpenSSLAsym
  * Depending on the key type used, additional details may be returned. Note that
  * some elements may not always be available.
  */
-#[ArrayShape(["bits" => "int", "key" => "string", "rsa" => "array", "dsa" => "array", "dh" => "array", "type" => "int"])]
+#[ArrayShape(["bits" => "int", "key" => "string", "rsa" => "array", "dsa" => "array", "dh" => "array", "ec" => "array", "type" => "int"])]
 function openssl_pkey_get_details(#[LanguageLevelTypeAware(["8.0" => "OpenSSLAsymmetricKey"], default: "resource")] $key): array|false {}
 
 /**
@@ -580,7 +580,10 @@ function openssl_pkcs12_read(string $pkcs12, &$certificates, string $passphrase)
  * </p>
  * @return OpenSSLCertificateSigningRequest|resource|false the CSR.
  */
-#[LanguageLevelTypeAware(["8.0" => "OpenSSLCertificateSigningRequest|false"], default: "resource|false")]
+#[LanguageLevelTypeAware([
+    "8.0" => "OpenSSLCertificateSigningRequest|false",
+    "8.2" => "OpenSSLCertificateSigningRequest|bool"
+], default: "resource|false")]
 function openssl_csr_new(
     array $distinguished_names,
     #[LanguageLevelTypeAware(['8.0' => 'OpenSSLAsymmetricKey'], default: 'resource')] &$private_key,
@@ -650,7 +653,8 @@ function openssl_csr_sign(
     #[LanguageLevelTypeAware(["8.0" => "OpenSSLAsymmetricKey|OpenSSLCertificate|array|string"], default: "resource|array|string")] $private_key,
     int $days,
     ?array $options,
-    int $serial = 0
+    int $serial = 0,
+    #[PhpStormStubsElementAvailable(from: '8.4')] ?string $serial_hex = null
 ) {}
 
 /**
@@ -1295,6 +1299,14 @@ define('X509_PURPOSE_SMIME_SIGN', 4);
 define('X509_PURPOSE_SMIME_ENCRYPT', 5);
 define('X509_PURPOSE_CRL_SIGN', 6);
 define('X509_PURPOSE_ANY', 7);
+/**
+ * @since 8.4
+ */
+define('X509_PURPOSE_OCSP_HELPER', 8);
+/**
+ * @since 8.4
+ */
+define('X509_PURPOSE_TIMESTAMP_SIGN', 9);
 
 /**
  * Used as default algorithm by <b>openssl_sign</b> and
@@ -1410,6 +1422,22 @@ define('OPENSSL_KEYTYPE_RSA', 0);
 define('OPENSSL_KEYTYPE_DSA', 1);
 define('OPENSSL_KEYTYPE_DH', 2);
 define('OPENSSL_KEYTYPE_EC', 3);
+/**
+ * @since 8.4
+ */
+define('OPENSSL_KEYTYPE_X25519', 4);
+/**
+ * @since 8.4
+ */
+define('OPENSSL_KEYTYPE_ED25519', 5);
+/**
+ * @since 8.4
+ */
+define('OPENSSL_KEYTYPE_X448', 6);
+/**
+ * @since 8.4
+ */
+define('OPENSSL_KEYTYPE_ED448', 7);
 
 /**
  * Whether SNI support is available or not.

@@ -5,6 +5,7 @@ namespace MongoDB\Driver;
 use MongoDB\BSON\Serializable;
 use MongoDB\Driver\Exception\InvalidArgumentException;
 use MongoDB\Driver\Exception\UnexpectedValueException;
+use stdClass;
 
 /**
  * Class ReadPreference
@@ -12,10 +13,19 @@ use MongoDB\Driver\Exception\UnexpectedValueException;
  */
 final class ReadPreference implements Serializable, \Serializable
 {
+    /** @deprecated */
     public const RP_PRIMARY = 1;
+
+    /** @deprecated */
     public const RP_PRIMARY_PREFERRED = 5;
+
+    /** @deprecated */
     public const RP_SECONDARY = 2;
+
+    /** @deprecated */
     public const RP_SECONDARY_PREFERRED = 6;
+
+    /** @deprecated */
     public const RP_NEAREST = 10;
 
     /**
@@ -75,6 +85,7 @@ final class ReadPreference implements Serializable, \Serializable
     /**
      * Returns the ReadPreference's "mode" option
      * @link https://php.net/manual/en/mongodb-driver-readpreference.getmode.php
+     * @deprecated Use getModeString instead
      */
     final public function getMode(): int {}
 
@@ -99,7 +110,7 @@ final class ReadPreference implements Serializable, \Serializable
      * @return object Returns an object for serializing the WriteConcern as BSON.
      * @throws InvalidArgumentException
      */
-    final public function bsonSerialize(): array|object {}
+    final public function bsonSerialize(): stdClass {}
 
     /**
      * Serialize a ReadPreference

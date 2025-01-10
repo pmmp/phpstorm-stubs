@@ -13,15 +13,14 @@ use PhpParser\Node\Scalar\LNumber;
 use PhpParser\Node\Scalar\String_;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
 use StubTests\Model\PHPClass;
-use StubTests\Model\PHPConst;
+use StubTests\Model\PHPConstant;
 use StubTests\Model\PHPEnum;
 use StubTests\Model\PHPFunction;
 use StubTests\Model\PHPInterface;
 use StubTests\Parsers\ParserUtils;
 use StubTests\TestData\Providers\PhpStormStubsSingleton;
-use StubTests\TestData\Providers\ReflectionStubsSingleton;
+use UnitEnum;
 use function array_filter;
 use function array_pop;
 use function property_exists;
@@ -29,22 +28,14 @@ use function strval;
 
 abstract class AbstractBaseStubsTestCase extends TestCase
 {
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-        PhpStormStubsSingleton::getPhpStormStubs();
-        ReflectionStubsSingleton::getReflectionStubs();
-    }
+    protected string $emptyDataSetMessage = "Data provider returned empty set";
 
-    /**
-     * @throws Exception|RuntimeException
-     */
-    public static function getStringRepresentationOfDefaultParameterValue(mixed $defaultValue, PHPClass|PHPInterface $contextClass = null): float|bool|int|string|null
+    public static function getStringRepresentationOfDefaultParameterValue(mixed $defaultValue, PHPClass|PHPInterface|null $contextClass = null): float|bool|int|string|null
     {
         if ($defaultValue instanceof ConstFetch) {
             $defaultValueName = (string)$defaultValue->name;
             if ($defaultValueName !== 'false' && $defaultValueName !== 'true' && $defaultValueName !== 'null') {
-                $constant = PhpStormStubsSingleton::getPhpStormStubs()->getConstant($defaultValueName);
+                $constant = PhpStormStubsSingleton::getPhpStormStubs()->getConstant($defaultValue->name->toCodeString());
                 $value = $constant->value;
             } else {
                 $value = $defaultValueName;
@@ -55,22 +46,22 @@ abstract class AbstractBaseStubsTestCase extends TestCase
             if ($defaultValue->left instanceof ConstFetch && $defaultValue->right instanceof ConstFetch) {
                 $constants = array_filter(
                     PhpStormStubsSingleton::getPhpStormStubs()->getConstants(),
-                    fn (PHPConst $const) => property_exists($defaultValue->left, 'name') &&
+                    fn ($const) => property_exists($defaultValue->left, 'name') &&
                         $const->name === (string)$defaultValue->left->name
                 );
-                /** @var PHPConst $leftConstant */
+                /** @var PHPConstant $leftConstant */
                 $leftConstant = array_pop($constants);
                 $constants = array_filter(
                     PhpStormStubsSingleton::getPhpStormStubs()->getConstants(),
-                    fn (PHPConst $const) => property_exists($defaultValue->right, 'name') &&
+                    fn ($const) => property_exists($defaultValue->right, 'name') &&
                         $const->name === (string)$defaultValue->right->name
                 );
-                /** @var PHPConst $rightConstant */
+                /** @var PHPConstant $rightConstant */
                 $rightConstant = array_pop($constants);
                 $value = $leftConstant->value|$rightConstant->value;
             } elseif ($defaultValue->left instanceof ClassConstFetch && $defaultValue->right instanceof ClassConstFetch){
-                $leftClass = $defaultValue->left->class->toString();
-                $rightClass = $defaultValue->right->class->toString();
+                $leftClass = $defaultValue->left->class->toCodeString();
+                $rightClass = $defaultValue->right->class->toCodeString();
                 $leftClass = PhpStormStubsSingleton::getPhpStormStubs()->getClass($leftClass);
                 $rightClass = PhpStormStubsSingleton::getPhpStormStubs()->getClass($rightClass);
                 if ($leftClass === null || $rightClass === null) {
@@ -83,9 +74,9 @@ abstract class AbstractBaseStubsTestCase extends TestCase
         } elseif ($defaultValue instanceof UnaryMinus && property_exists($defaultValue->expr, 'value')) {
             $value = '-' . $defaultValue->expr->value;
         } elseif ($defaultValue instanceof ClassConstFetch) {
-            $class = (string)$defaultValue->class;
+            $class = $defaultValue->class->toCodeString();
             if ($class === 'self' && $contextClass !== null) {
-                $class = $contextClass->name;
+                $class = $contextClass->id;
             }
             $parentClass = PhpStormStubsSingleton::getPhpStormStubs()->getEnum($class) ??
                 PhpStormStubsSingleton::getPhpStormStubs()->getClass($class) ??
@@ -94,19 +85,19 @@ abstract class AbstractBaseStubsTestCase extends TestCase
                 throw new Exception("Class $class not found in stubs");
             }
             if ($parentClass instanceof PHPEnum) {
-                $value = $parentClass->name . "::" . $defaultValue->name;
+                $value = $parentClass->id . "::" . $defaultValue->name;
             } elseif ((string)$defaultValue->name === 'class') {
                 $value = (string)$defaultValue->class;
             } else {
-                $constant = $parentClass->getConstant((string)$defaultValue->name);;
+                $constant = $parentClass->getConstant((string)$defaultValue->name);
                 $value = $constant->value;
             }
         } elseif ($defaultValue === null) {
             $value = "null";
         } elseif (is_array($defaultValue) || $defaultValue instanceof Array_) {
             $value = '[]';
-        } elseif ($defaultValue instanceof \UnitEnum){
-            $value = get_class($defaultValue) . "::" . $defaultValue->name;
+        } elseif ($defaultValue instanceof UnitEnum){
+            $value = "\\" . get_class($defaultValue) . "::" . $defaultValue->name;
         } else {
             $value = strval($defaultValue);
         }
@@ -135,7 +126,6 @@ abstract class AbstractBaseStubsTestCase extends TestCase
     /**
      * @param PHPFunction[] $filtered
      * @return PHPFunction[]
-     * @throws RuntimeException
      */
     protected static function getDuplicatedFunctions(array $filtered): array
     {
@@ -224,5 +214,17 @@ abstract class AbstractBaseStubsTestCase extends TestCase
                 $resultArray[] = $type;
             }
         });
+    }
+
+    public function getClassLikeFromStubs(string $classId, bool $shouldSuiteCurrentPHPVersion = true): PHPInterface|PHPEnum|PHPClass|null
+    {
+        $stubClass = PhpStormStubsSingleton::getPhpStormStubs()->getEnum("$classId", $shouldSuiteCurrentPHPVersion);
+        if ($stubClass == null) {
+            $stubClass = PhpStormStubsSingleton::getPhpStormStubs()->getClass("$classId", $shouldSuiteCurrentPHPVersion);
+        }
+        if ($stubClass == null) {
+            $stubClass = PhpStormStubsSingleton::getPhpStormStubs()->getInterface("$classId", $shouldSuiteCurrentPHPVersion);
+        }
+        return $stubClass;
     }
 }

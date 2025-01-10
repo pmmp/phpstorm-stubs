@@ -95,6 +95,7 @@ class PhpCoreStubsProvider
         'PECL' => [
             'apcu',
             'ast',
+            'brotli',
             'crypto',
             'cubrid',
             'decimal',
@@ -135,6 +136,7 @@ class PhpCoreStubsProvider
             'radius',
             'rdkafka',
             'rpminfo',
+            'simdjson',
             'simple_kafka_client',
             'solr',
             'SplType',
@@ -177,6 +179,7 @@ class PhpCoreStubsProvider
             'fann',
             'FFI',
             'ffmpeg',
+            'frankenphp',
             'geos',
             'gnupg',
             'grpc',

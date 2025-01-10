@@ -16,7 +16,7 @@ final class UTCDateTime implements Type, UTCDateTimeInterface, \Serializable, \J
      * Construct a new UTCDateTime
      * @link https://php.net/manual/en/mongodb-bson-utcdatetime.construct.php
      */
-    final public function __construct(int|string|float|DateTimeInterface|null $milliseconds = null) {}
+    final public function __construct(int|string|float|DateTimeInterface|Int64|null $milliseconds = null) {}
 
     public static function __set_state(array $properties) {}
 
@@ -25,6 +25,13 @@ final class UTCDateTime implements Type, UTCDateTimeInterface, \Serializable, \J
      * @link https://php.net/manual/en/mongodb-bson-utcdatetime.todatetime.php
      */
     final public function toDateTime(): \DateTime {}
+
+    /**
+     * Returns the DateTimeImmutable representation of this UTCDateTime
+     * @since 1.20.0
+     * @link https://php.net/manual/en/mongodb-bson-utcdatetime.todatetimeimmutable.php
+     */
+    final public function toDateTimeImmutable(): \DateTimeImmutable {}
 
     /**
      * Returns the string representation of this UTCDateTime

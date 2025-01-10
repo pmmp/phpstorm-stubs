@@ -35,6 +35,8 @@ class finfo
      * </p>
      * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
      */
+    #[LanguageLevelTypeAware(['8.4' => 'true'], default: 'bool')]
+    #[TentativeType]
     public function set_flags(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags) {}
 
     /**
@@ -131,7 +133,8 @@ function finfo_close(#[LanguageLevelTypeAware(['8.1' => 'finfo'], default: 'reso
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function finfo_set_flags(#[LanguageLevelTypeAware(['8.1' => 'finfo'], default: 'resource')] $finfo, int $flags): bool {}
+#[LanguageLevelTypeAware(['8.4' => 'true'], default: 'bool')]
+function finfo_set_flags(#[LanguageLevelTypeAware(['8.1' => 'finfo'], default: 'resource')] $finfo, int $flags) {}
 
 /**
  * (PHP &gt;= 5.3.0, PECL fileinfo &gt;= 0.1.0)<br/>
@@ -176,7 +179,7 @@ function finfo_buffer(#[LanguageLevelTypeAware(['8.1' => 'finfo'], default: 'res
 /**
  * Detect MIME Content-type for a file
  * @link https://php.net/manual/en/function.mime-content-type.php
- * @param string $filename <p>
+ * @param resource|string $filename <p>
  * Path to the tested file.
  * </p>
  * @return string|false the content type in MIME format, like

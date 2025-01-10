@@ -4333,3 +4333,70 @@ define('CURLOPT_MAXLIFETIME_CONN', 314);
  * @since 8.2
  */
 define('CURLOPT_SSH_HOST_PUBLIC_KEY_SHA256', 10311);
+
+/**
+ * @since 8.4
+ */
+define('CURL_HTTP_VERSION_3', 30);
+
+/**
+ * @since 8.4
+ */
+define('CURL_HTTP_VERSION_3ONLY', 31);
+
+/**
+ * @since 8.4
+ */
+define('CURLOPT_PREREQFUNCTION', 20312);
+
+/**
+ * @since 8.4
+ */
+define('CURL_PREREQFUNC_OK', 0);
+
+/**
+ * @since 8.4
+ */
+define('CURL_PREREQFUNC_ABORT', 1);
+
+/**
+ * @since 8.4
+ */
+define('CURLOPT_TCP_KEEPCNT', 326);
+
+/**
+ * @since 8.4
+ */
+define('CURLOPT_SERVER_RESPONSE_TIMEOUT', 112);
+/**
+ * @since 8.4
+ */
+define('CURLOPT_DEBUGFUNCTION', 1);
+/**
+ * @since 8.4
+ */
+define('CURLINFO_TEXT', 1);
+/**
+ * @since 8.4
+ */
+define('CURLINFO_HEADER_IN', 1);
+/**
+ * @since 8.4
+ */
+define('CURLINFO_DATA_IN', 1);
+/**
+ * @since 8.4
+ */
+define('CURLINFO_DATA_OUT', 1);
+/**
+ * @since 8.4
+ */
+define('CURLINFO_SSL_DATA_OUT', 1);
+/**
+ * @since 8.4
+ */
+define('CURLINFO_SSL_DATA_IN', 1);
+/**
+ * @since 8.4
+ */
+define('CURLINFO_POSTTRANSFER_TIME_T', 6291523);

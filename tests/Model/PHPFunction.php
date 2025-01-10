@@ -3,10 +3,11 @@
 namespace StubTests\Model;
 
 use Exception;
-use JetBrains\PhpStorm\Deprecated;
 use JetBrains\PhpStorm\Internal\TentativeType;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use phpDocumentor\Reflection\DocBlock\Tags\Return_;
+use phpDocumentor\Reflection\PseudoTypes\List_;
+use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\Collection;
 use phpDocumentor\Reflection\Types\Compound;
@@ -18,14 +19,10 @@ use ReflectionFunctionAbstract;
 use RuntimeException;
 use stdClass;
 use StubTests\Parsers\DocFactoryProvider;
+use StubTests\Parsers\ParserUtils;
 
-class PHPFunction extends BasePHPElement
+class PHPFunction extends PHPNamespacedElement
 {
-    /**
-     * @var bool
-     */
-    public $isDeprecated;
-
     /**
      * @var PHPParameter[]
      */
@@ -47,8 +44,11 @@ class PHPFunction extends BasePHPElement
      */
     public function readObjectFromReflection($reflectionObject)
     {
-        $this->name = $reflectionObject->name;
+        $NamespaceParts = explode("\\", $reflectionObject->getName());
+        $this->id = "\\" . implode("\\", $NamespaceParts);
+        $this->name = array_pop($NamespaceParts);
         $this->isDeprecated = $reflectionObject->isDeprecated();
+        $this->namespace = $reflectionObject->getNamespaceName();
         foreach ($reflectionObject->getParameters() as $parameter) {
             $this->parameters[] = (new PHPParameter())->readObjectFromReflection($parameter);
         }
@@ -68,8 +68,10 @@ class PHPFunction extends BasePHPElement
      */
     public function readObjectFromStubNode($node)
     {
-        $functionName = self::getFQN($node);
-        $this->name = $functionName;
+        $NamespaceParts = explode("\\", $node->namespacedName);
+        $this->id = "\\" . implode("\\", $NamespaceParts);
+        $this->name = array_pop($NamespaceParts);
+        $this->namespace = trim(implode("\\", $NamespaceParts), '\\');
         $typesFromAttribute = self::findTypesFromAttribute($node->attrGroups);
         $this->availableVersionsRangeFromAttribute = self::findAvailableVersionsRangeFromAttribute($node->attrGroups);
         $this->returnTypesFromAttribute = $typesFromAttribute;
@@ -77,7 +79,7 @@ class PHPFunction extends BasePHPElement
         $index = 0;
         foreach ($node->getParams() as $parameter) {
             $parsedParameter = (new PHPParameter())->readObjectFromStubNode($parameter);
-            if (self::entitySuitsCurrentPhpVersion($parsedParameter)) {
+            if (ParserUtils::entitySuitsCurrentPhpVersion($parsedParameter)) {
                 $parsedParameter->indexInSignature = $index;
                 $addedParameters = array_filter($this->parameters, function (PHPParameter $addedParameter) use ($parsedParameter) {
                     return $addedParameter->name === $parsedParameter->name;
@@ -110,6 +112,7 @@ class PHPFunction extends BasePHPElement
         $this->checkIfReturnTypeIsTentative($node);
         $this->checkDeprecationTag($node);
         $this->checkReturnTag();
+        $this->stubObjectHash = spl_object_hash($this);
         return $this;
     }
 
@@ -117,28 +120,34 @@ class PHPFunction extends BasePHPElement
         $this->hasTentativeReturnType = self::hasTentativeReturnTypeAttribute($node);
     }
 
-    protected function checkDeprecationTag(FunctionLike $node)
-    {
-        $this->isDeprecated = self::hasDeprecatedAttribute($node) || !empty($this->deprecatedTags);
-    }
-
     protected function checkReturnTag()
     {
         if (!empty($this->returnTags) && $this->returnTags[0] instanceof Return_) {
             $type = $this->returnTags[0]->getType();
-            if ($type instanceof Collection) {
-                $returnType = $type->getFqsen();
-            } elseif ($type instanceof Array_ && $type->getValueType() instanceof Collection) {
-                $returnType = "array";
-            } else {
-                $returnType = $type;
-            }
-            if ($returnType instanceof Compound) {
-                foreach ($returnType as $nextType) {
-                    $this->returnTypesFromPhpDoc[] = (string)$nextType;
+            $this->returnTypesFromPhpDoc = self::handleType($type);
+        }
+    }
+
+    /**
+     * @param Type|null $type
+     * @return string[]
+     */
+    protected static function handleType($type) {
+        if ($type instanceof Collection) {
+            return [$type->getFqsen()->getName()];
+        } elseif ($type instanceof Array_ && $type->getValueType() instanceof Collection) {
+            return ["array"];
+        } elseif ($type instanceof List_) {
+            return ["array"];
+        } else {
+            if ($type instanceof Compound) {
+                $types = [];
+                foreach ($type as $nextType) {
+                    $types[] = self::handleType($nextType);
                 }
+                return CommonUtils::flattenArray($types, false);
             } else {
-                $this->returnTypesFromPhpDoc[] = (string)$returnType;
+                return [(string)$type];
             }
         }
     }
@@ -196,22 +205,6 @@ class PHPFunction extends BasePHPElement
      * @param FunctionLike $node
      * @return bool
      */
-    private static function hasDeprecatedAttribute(FunctionLike $node)
-    {
-        foreach ($node->getAttrGroups() as $group) {
-            foreach ($group->attrs as $attr) {
-                if ((string)$attr->name === Deprecated::class) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * @param FunctionLike $node
-     * @return bool
-     */
     public static function hasTentativeReturnTypeAttribute(FunctionLike $node)
     {
         foreach ($node->getAttrGroups() as $group) {
@@ -232,5 +225,17 @@ class PHPFunction extends BasePHPElement
     {
         $phpDoc = $docComment !== null ? DocFactoryProvider::getDocFactory()->create($docComment->getText()) : null;
         return $phpDoc !== null && !empty($phpDoc->getTagsByName('deprecated'));
+    }
+
+    public function getParameter(string $parameterName)
+    {
+        $parameters = array_filter($this->parameters, function (PHPParameter $parameter) use ($parameterName) {
+            return $parameter->name === $parameterName && $parameter->duplicateOtherElement === false
+                && ParserUtils::entitySuitsCurrentPhpVersion($parameter);
+        });
+        if (empty($parameters)) {
+            throw new RuntimeException("Parameter $parameterName not found in stubs for set language version");
+        }
+        return array_pop($parameters);
     }
 }

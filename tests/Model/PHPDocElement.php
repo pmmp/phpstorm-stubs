@@ -4,12 +4,12 @@ namespace StubTests\Model;
 
 use Exception;
 use phpDocumentor\Reflection\DocBlock\Tags\Deprecated;
-use phpDocumentor\Reflection\DocBlock\Tags\Generic;
 use phpDocumentor\Reflection\DocBlock\Tags\Link;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 use phpDocumentor\Reflection\DocBlock\Tags\See;
 use phpDocumentor\Reflection\DocBlock\Tags\Since;
+use phpDocumentor\Reflection\DocBlock\Tags\Template;
 use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use PhpParser\Node;
 use StubTests\Model\Tags\RemovedTag;
@@ -76,6 +76,10 @@ trait PHPDocElement
      * @var bool
      */
     public $hasInternalMetaTag = false;
+
+    /**
+     * @var list<Template>
+     */
     public $templateTypes = [];
 
     protected function collectTags(Node $node)
@@ -102,12 +106,7 @@ trait PHPDocElement
                 $this->hasInternalMetaTag = $phpDoc->hasTag('meta');
                 $this->hasInheritDocTag = $phpDoc->hasTag('inheritdoc') || $phpDoc->hasTag('inheritDoc') ||
                     stripos($phpDoc->getSummary(), 'inheritdoc') > 0;
-                $this->templateTypes += array_map(
-                    function (Generic $tag) {
-                        return preg_split("/\W/", $tag->getDescription()->getBodyTemplate())[0];
-                    },
-                    $phpDoc->getTagsByName('template')
-                );
+                $this->templateTypes += $phpDoc->getTagsByName('template');
             } catch (Exception $e) {
                 $this->parseError = $e;
             }

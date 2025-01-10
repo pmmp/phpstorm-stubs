@@ -205,12 +205,12 @@ class mysqli
      * @param string $socket [optional] Specifies the socket or named pipe that should be used. Defaults to ini_get("mysqli.default_socket")
      */
     public function __construct(
-        ?string $hostname = null,
-        ?string $username = null,
-        ?string $password = null,
-        ?string $database = null,
-        ?int $port = null,
-        ?string $socket = null
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $hostname = null,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $username = null,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $password = null,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $database = null,
+        #[LanguageLevelTypeAware(['8.0' => 'int|null'], default: '')] $port = null,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $socket = null
     ) {}
 
     /**
@@ -222,7 +222,7 @@ class mysqli
      * @return bool true on success or false on failure.
      */
     #[TentativeType]
-    public function autocommit(bool $enable): bool {}
+    public function autocommit(#[LanguageLevelTypeAware(['8.0' => 'bool'], default: '')] $enable): bool {}
 
     /**
      * Starts a transaction
@@ -247,7 +247,7 @@ class mysqli
      * @param string $password <p>
      * The MySQL password.
      * </p>
-     * @param string $database <p>
+     * @param string|null $database <p>
      * The database to change to.
      * </p>
      * <p>
@@ -258,7 +258,11 @@ class mysqli
      * @return bool true on success or false on failure.
      */
     #[TentativeType]
-    public function change_user(string $username, string $password, ?string $database): bool {}
+    public function change_user(
+        #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $username,
+        #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $password,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $database
+    ): bool {}
 
     /**
      * Returns the current character set of the database connection
@@ -279,17 +283,22 @@ class mysqli
      * @link https://php.net/manual/en/mysqli.close.php
      * @return bool true on success or false on failure.
      */
+    #[LanguageLevelTypeAware(['8.4' => 'true'], default: 'bool')]
+    #[TentativeType]
     public function close() {}
 
     /**
      * Commits the current transaction
      * @link https://php.net/manual/en/mysqli.commit.php
      * @param int $flags A bitmask of MYSQLI_TRANS_COR_* constants.
-     * @param string $name If provided then COMMIT $name is executed.
+     * @param string|null $name If provided then COMMIT $name is executed.
      * @return bool true on success or false on failure.
      */
     #[TentativeType]
-    public function commit(int $flags = 0, ?string $name = null): bool {}
+    public function commit(
+        #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = 0,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $name = null
+    ): bool {}
 
     /**
      * @link https://php.net/manual/en/function.mysqli-connect.php
@@ -303,12 +312,12 @@ class mysqli
      */
     #[TentativeType]
     public function connect(
-        ?string $hostname = null,
-        ?string $username = null,
-        ?string $password = null,
-        ?string $database = null,
-        ?int $port = null,
-        ?string $socket = null
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $hostname = null,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $username = null,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $password = null,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $database = null,
+        #[LanguageLevelTypeAware(['8.0' => 'int|null'], default: '')] $port = null,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $socket = null
     ): bool {}
 
     /**
@@ -327,7 +336,9 @@ class mysqli
      * </p>
      * @return bool true.
      */
-    public function debug(string $options) {}
+    #[LanguageLevelTypeAware(['8.4' => 'true'], default: 'bool')]
+    #[TentativeType]
+    public function debug(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $options) {}
 
     /**
      * Returns a character set object
@@ -352,12 +363,40 @@ class mysqli
     public function get_charset(): ?object {}
 
     /**
-     * @param mysqli $mysql
-     * @param string $query
-     * @param array|null $params
-     * @return mysqli_result|bool
-     * @see mysqli_execute_query
+     * <p>Prepares the SQL query, binds parameters, and executes it. The
+     * mysqli::execute_query() method is a shortcut for mysqli::prepare(),
+     * mysqli_stmt::bind_param(), mysqli_stmt::execute(), and
+     * mysqli_stmt::get_result().</p>
+     * <p>The statement template can contain zero or more question mark (?)
+     * parameter markers⁠—also called placeholders. The parameter values must be
+     * provided as an array using params parameter.</p>
+     * <p>A prepared statement is created under the hood but it's never exposed
+     * outside of the function. It's impossible to access properties of the
+     * statement as one would do with the mysqli_stmt object. Due to this
+     * limitation, the status information is copied to the mysqli object and is
+     * available using its methods, e.g. mysqli_affected_rows() or
+     * mysqli_error().</p>
+     *
+     * @param string $query The query, as a string. It must consist of a single SQL
+     * statement. The SQL statement may contain zero or more parameter markers
+     * represented by question mark (?) characters at the appropriate positions.
+     * <b>Note:</b> The markers are legal only in certain places in SQL statements.
+     * For example, they are permitted in the VALUES() list of an INSERT statement
+     * (to specify column values for a row), or in a comparison with a column in a
+     * WHERE clause to specify a comparison value. However, they are not permitted
+     * for identifiers (such as table or column names).
+     *
+     * @param array|null $params An optional list array with as many elements as
+     * there are bound parameters in the SQL statement being executed. Each value
+     * is treated as a string.
+     *
+     * @return mysqli_result|bool Returns false on failure. For successful queries
+     * which produce a result set, such as SELECT, SHOW, DESCRIBE or EXPLAIN,
+     * returns a mysqli_result object. For other successful queries, returns true.
+     *
      * @since 8.2
+     *
+     * @link https://www.php.net/manual/en/mysqli.execute-query.php
      */
     public function execute_query(string $query, ?array $params = null): mysqli_result|bool {}
 
@@ -407,8 +446,9 @@ class mysqli
      * @param int $process_id
      * @return bool true on success or false on failure.
      */
+    #[Deprecated("The function is deprecated", since: "8.4")]
     #[TentativeType]
-    public function kill(int $process_id): bool {}
+    public function kill(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $process_id): bool {}
 
     /**
      * Performs one or more queries on the database
@@ -428,7 +468,7 @@ class mysqli
      * <b>mysqli_next_result</b> first.
      */
     #[TentativeType]
-    public function multi_query(string $query): bool {}
+    public function multi_query(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $query): bool {}
 
     /**
      * @link https://php.net/manual/en/mysqli.construct.php
@@ -509,13 +549,14 @@ class mysqli
      * @return bool true on success or false on failure.
      */
     #[TentativeType]
-    public function options(int $option, $value): bool {}
+    public function options(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $option, $value): bool {}
 
     /**
      * Pings a server connection, or tries to reconnect if the connection has gone down
      * @link https://php.net/manual/en/mysqli.ping.php
      * @return bool true on success or false on failure.
      */
+    #[Deprecated("The function is deprecated", since: "8.4")]
     #[TentativeType]
     public function ping(): bool {}
 
@@ -549,7 +590,7 @@ class mysqli
      * @return mysqli_stmt|false <b>mysqli_prepare</b> returns a statement object or false if an error occurred.
      */
     #[TentativeType]
-    public function prepare(string $query): mysqli_stmt|false {}
+    public function prepare(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $query): mysqli_stmt|false {}
 
     /**
      * Performs a query on the database
@@ -595,7 +636,7 @@ class mysqli
      */
     #[TentativeType]
     public function query(
-        string $query,
+        #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $query,
         #[PhpStormStubsElementAvailable(from: '7.1')] int $result_mode = MYSQLI_STORE_RESULT
     ): mysqli_result|bool {}
 
@@ -677,13 +718,13 @@ class mysqli
      */
     #[TentativeType]
     public function real_connect(
-        ?string $hostname = null,
-        ?string $username = null,
-        ?string $password = null,
-        ?string $database = null,
-        ?int $port = null,
-        ?string $socket = null,
-        int $flags = 0
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $hostname = null,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $username = null,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $password = null,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $database = null,
+        #[LanguageLevelTypeAware(['8.0' => 'int|null'], default: '')] $port = null,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $socket = null,
+        #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = 0
     ): bool {}
 
     /**
@@ -699,7 +740,7 @@ class mysqli
      * @return string an escaped string.
      */
     #[TentativeType]
-    public function real_escape_string(string $string): string {}
+    public function real_escape_string(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $string): string {}
 
     /**
      * Poll connections
@@ -719,7 +760,13 @@ class mysqli
      * @return int|false number of ready connections in success, false otherwise.
      */
     #[TentativeType]
-    public static function poll(?array &$read, ?array &$error, array &$reject, int $seconds, int $microseconds = 0): int|false {}
+    public static function poll(
+        #[LanguageLevelTypeAware(['8.0' => 'array|null'], default: '')] &$read,
+        #[LanguageLevelTypeAware(['8.0' => 'array|null'], default: '')] &$error,
+        #[LanguageLevelTypeAware(['8.0' => 'array'], default: '')] &$reject,
+        #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $seconds,
+        #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $microseconds = 0
+    ): int|false {}
 
     /**
      * Get result from async query
@@ -737,7 +784,7 @@ class mysqli
      * @link https://secure.php.net/manual/en/mysqli.real-escape-string.php
      */
     #[TentativeType]
-    public function escape_string(string $string): string {}
+    public function escape_string(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $string): string {}
 
     /**
      * Execute an SQL query
@@ -754,7 +801,7 @@ class mysqli
      * @return bool true on success or false on failure.
      */
     #[TentativeType]
-    public function real_query(string $query): bool {}
+    public function real_query(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $query): bool {}
 
     /**
      * Removes the named savepoint from the set of savepoints of the current transaction
@@ -799,7 +846,7 @@ class mysqli
      * @return bool true on success or false on failure.
      */
     #[TentativeType]
-    public function select_db(string $database): bool {}
+    public function select_db(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $database): bool {}
 
     /**
      * Sets the client character set
@@ -810,7 +857,7 @@ class mysqli
      * @return bool true on success or false on failure
      */
     #[TentativeType]
-    public function set_charset(string $charset): bool {}
+    public function set_charset(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $charset): bool {}
 
     /**
      * @link https://php.net/manual/en/function.mysqli-set-opt
@@ -818,29 +865,37 @@ class mysqli
      * @param string|int $value
      */
     #[TentativeType]
-    public function set_opt(int $option, $value): bool {}
+    public function set_opt(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $option, $value): bool {}
 
     /**
      * Used for establishing secure connections using SSL
      * @link https://secure.php.net/manual/en/mysqli.ssl-set.php
-     * @param string $key <p>
+     * @param string|null $key <p>
      * The path name to the key file.
      * </p>
-     * @param string $certificate <p>
+     * @param string|null $certificate <p>
      * The path name to the certificate file.
      * </p>
-     * @param string $ca_certificate <p>
+     * @param string|null $ca_certificate <p>
      * The path name to the certificate authority file.
      * </p>
-     * @param string $ca_path <p>
+     * @param string|null $ca_path <p>
      * The pathname to a directory that contains trusted SSL CA certificates in PEM format.
      * </p>
-     * @param string $cipher_algos <p>
+     * @param string|null $cipher_algos <p>
      * A list of allowable ciphers to use for SSL encryption.
      * </p>
      * @return bool This function always returns TRUE value.
      */
-    public function ssl_set(?string $key, ?string $certificate, ?string $ca_certificate, ?string $ca_path, ?string $cipher_algos) {}
+    #[LanguageLevelTypeAware(['8.4' => 'true'], default: 'bool')]
+    #[TentativeType]
+    public function ssl_set(
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $key,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $certificate,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $ca_certificate,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $ca_path,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $cipher_algos
+    ) {}
 
     /**
      * Gets the current system status
@@ -879,7 +934,9 @@ class mysqli
      * statement should have produced a non-empty result set.
      */
     #[TentativeType]
-    public function store_result(int $mode = 0): mysqli_result|false {}
+    public function store_result(
+        #[Deprecated(since: '8.4'), LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $mode = 0
+    ): mysqli_result|false {}
 
     /**
      * Returns whether thread safety is given or not
@@ -903,6 +960,7 @@ class mysqli
      * @return bool TRUE if the refresh was a success, otherwise FALSE
      * @since 5.3
      */
+    #[Deprecated("The function is deprecated", since: "8.4")]
     #[TentativeType]
     public function refresh(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags): bool {}
 }
@@ -1026,7 +1084,7 @@ class mysqli_result implements IteratorAggregate
      * @return bool true on success or false on failure.
      */
     #[TentativeType]
-    public function data_seek(int $offset): bool {}
+    public function data_seek(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $offset): bool {}
 
     /**
      * Returns the next field in the result set
@@ -1224,7 +1282,7 @@ class mysqli_result implements IteratorAggregate
      * </table>
      */
     #[TentativeType]
-    public function fetch_field_direct(int $index): object|false {}
+    public function fetch_field_direct(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $index): object|false {}
 
     /**
      * Fetches all result rows as an associative array, a numeric array, or both
@@ -1261,7 +1319,7 @@ class mysqli_result implements IteratorAggregate
      * are no more rows in the result set, or false on failure.
      */
     #[TentativeType]
-    public function fetch_array(int $mode = MYSQLI_BOTH): array|false|null {}
+    public function fetch_array(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $mode = MYSQLI_BOTH): array|false|null {}
 
     /**
      * Fetch the next row of a result set as an associative array
@@ -1274,7 +1332,7 @@ class mysqli_result implements IteratorAggregate
     public function fetch_assoc(): array|false|null {}
 
     /**
-     * @template T
+     * @template T of object
      *
      * Fetch the next row of a result set as an object
      * @link https://php.net/manual/en/mysqli-result.fetch-object.php
@@ -1291,7 +1349,7 @@ class mysqli_result implements IteratorAggregate
      * are no more rows in the result set, or false on failure.
      */
     #[TentativeType]
-    public function fetch_object(string $class = 'stdClass', array $constructor_args = []): object|false|null {}
+    public function fetch_object(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $class = 'stdClass', array $constructor_args = []): object|false|null {}
 
     /**
      * Fetch the next row of a result set as an enumerated array
@@ -1326,7 +1384,7 @@ class mysqli_result implements IteratorAggregate
      */
     #[TentativeType]
     #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
-    public function field_seek(int $index) {}
+    public function field_seek(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $index) {}
 
     /**
      * Frees the memory associated with a result
@@ -1423,7 +1481,7 @@ class mysqli_stmt
      * @return int Returns the value of the attribute.
      */
     #[TentativeType]
-    public function attr_get(int $attribute): int {}
+    public function attr_get(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $attribute): int {}
 
     /**
      * Used to modify the behavior of a prepared statement
@@ -1478,7 +1536,10 @@ class mysqli_stmt
      * @return bool
      */
     #[TentativeType]
-    public function attr_set(int $attribute, int $value): bool {}
+    public function attr_set(
+        #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $attribute,
+        #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $value
+    ): bool {}
 
     /**
      * Binds variables to a prepared statement as parameters
@@ -1533,6 +1594,8 @@ class mysqli_stmt
      * @link https://php.net/manual/en/mysqli-stmt.close.php
      * @return bool true on success or false on failure.
      */
+    #[LanguageLevelTypeAware(['8.4' => 'true'], default: 'bool')]
+    #[TentativeType]
     public function close() {}
 
     /**
@@ -1545,7 +1608,7 @@ class mysqli_stmt
      * @return void
      */
     #[TentativeType]
-    public function data_seek(int $offset): void {}
+    public function data_seek(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $offset): void {}
 
     /**
      * Executes a prepared statement
@@ -1618,7 +1681,10 @@ class mysqli_stmt
      * @return bool true on success or false on failure.
      */
     #[TentativeType]
-    public function send_long_data(int $param_num, string $data): bool {}
+    public function send_long_data(
+        #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $param_num,
+        #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $data
+    ): bool {}
 
     /**
      * No documentation available
@@ -1670,7 +1736,7 @@ class mysqli_stmt
      * @return bool true on success or false on failure.
      */
     #[TentativeType]
-    public function prepare(string $query): bool {}
+    public function prepare(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $query): bool {}
 
     /**
      * Stores a result set in an internal buffer
@@ -1871,15 +1937,45 @@ function mysqli_stmt_execute(mysqli_stmt $statement, #[PhpStormStubsElementAvail
  * as there are bound parameters in the SQL statement being executed. Each value is treated as a string.
  * @return bool
  */
-#[Deprecated(since: '5.3')]
 function mysqli_execute(mysqli_stmt $statement, #[PhpStormStubsElementAvailable('8.1')] ?array $params = null): bool {}
-
 /**
- * @param mysqli $mysql
- * @param string $query
- * @param array|null $params
- * @return mysqli_result|bool
+ * <p>Prepares the SQL query, binds parameters, and executes it. The
+ * mysqli::execute_query() method is a shortcut for mysqli::prepare(),
+ * mysqli_stmt::bind_param(), mysqli_stmt::execute(), and
+ * mysqli_stmt::get_result().</p>
+ * <p>The statement template can contain zero or more question mark (?)
+ * parameter markers⁠—also called placeholders. The parameter values must be
+ * provided as an array using params parameter.</p>
+ * <p>A prepared statement is created under the hood but it's never exposed
+ * outside of the function. It's impossible to access properties of the
+ * statement as one would do with the mysqli_stmt object. Due to this
+ * limitation, the status information is copied to the mysqli object and is
+ * available using its methods, e.g. mysqli_affected_rows() or
+ * mysqli_error().</p>
+ *
+ * @param mysqli $mysql A mysqli object returned by mysqli_connect() or
+ * mysqli_init()
+ *
+ * @param string $query The query, as a string. It must consist of a single SQL
+ *  statement. The SQL statement may contain zero or more parameter markers
+ *  represented by question mark (?) characters at the appropriate positions.
+ *  <b>Note:</b> The markers are legal only in certain places in SQL statements.
+ *  For example, they are permitted in the VALUES() list of an INSERT statement
+ *  (to specify column values for a row), or in a comparison with a column in a
+ *  WHERE clause to specify a comparison value. However, they are not permitted
+ *  for identifiers (such as table or column names).
+ *
+ * @param ?array $params An optional list array with as many elements as there
+ *  are bound parameters in the SQL statement being executed. Each value is
+ *  treated as a string.
+ *
+ * @return mysqli_result|bool Returns false on failure. For successful queries
+ *  which produce a result set, such as SELECT, SHOW, DESCRIBE or EXPLAIN,
+ *  returns a mysqli_result object. For other successful queries, returns true.
+ *
  * @since 8.2
+ *
+ * @link https://www.php.net/manual/en/mysqli.execute-query.php
  */
 function mysqli_execute_query(mysqli $mysql, string $query, ?array $params = null): mysqli_result|bool {}
 
@@ -1956,7 +2052,7 @@ function mysqli_fetch_array(mysqli_result $result, int $mode = MYSQLI_BOTH): arr
 function mysqli_fetch_assoc(mysqli_result $result): array|null|false {}
 
 /**
- * @template T
+ * @template T of object
  *
  * Fetch the next row of a result set as an object
  * @link https://php.net/manual/en/mysqli-result.fetch-object.php
@@ -2071,7 +2167,7 @@ function mysqli_get_charset(mysqli $mysql): ?object {}
  * @param mysqli|null $mysql A link identifier returned by mysqli_connect() or mysqli_init()
  * @return string|null A string that represents the MySQL client library version
  */
-#[LanguageLevelTypeAware(['8.0' => 'string'], default: '?string')]
+#[LanguageLevelTypeAware(['8.0' => 'string'], default: 'string|null')]
 function mysqli_get_client_info(
     #[PhpStormStubsElementAvailable(from: '5.3', to: '7.1')] mysqli $mysql,
     #[PhpStormStubsElementAvailable(from: '8.0')] ?mysqli $mysql = null
@@ -2196,6 +2292,7 @@ function mysqli_insert_id(mysqli $mysql): string|int {}
  * @param int $process_id
  * @return bool
  */
+#[Deprecated("The function is deprecated", since: "8.4")]
 function mysqli_kill(mysqli $mysql, int $process_id): bool {}
 
 /**
@@ -2282,6 +2379,7 @@ function mysqli_options(mysqli $mysql, int $option, $value): bool {}
  * @param mysqli $mysql A link identifier returned by mysqli_connect() or mysqli_init()
  * @return bool
  */
+#[Deprecated("The function is deprecated", since: "8.4")]
 function mysqli_ping(mysqli $mysql): bool {}
 
 /**
@@ -2343,7 +2441,8 @@ function mysqli_prepare(mysqli $mysql, string $query): mysqli_stmt|false {}
  * </p>
  * @return bool
  */
-function mysqli_report(int $flags): bool {}
+#[LanguageLevelTypeAware(['8.4' => 'true'], default: 'bool')]
+function mysqli_report(int $flags) {}
 
 /**
  * Performs a query on the database
@@ -2764,7 +2863,7 @@ function mysqli_stmt_store_result(mysqli_stmt $statement): bool {}
  * @param int $mode [optional] The option that you want to set
  * @return mysqli_result|false
  */
-function mysqli_store_result(mysqli $mysql, int $mode = 0): mysqli_result|false {}
+function mysqli_store_result(mysqli $mysql, #[Deprecated(since: "8.4")] int $mode = 0): mysqli_result|false {}
 
 /**
  * Returns the thread ID for the current connection
@@ -2804,6 +2903,7 @@ function mysqli_warning_count(mysqli $mysql): int {}
  * @param int $flags
  * @return bool
  */
+#[Deprecated("The function is deprecated", since: "8.4")]
 function mysqli_refresh(mysqli $mysql, int $flags): bool {}
 
 /**
@@ -3559,6 +3659,9 @@ define('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT', 64);
 define('MYSQLI_CLIENT_CAN_HANDLE_EXPIRED_PASSWORDS', 4194304);
 define('MYSQLI_OPT_CAN_HANDLE_EXPIRED_PASSWORDS', 37);
 define('MYSQLI_OPT_READ_TIMEOUT', 11);
+/**
+ * @deprecated 8.4
+ */
 define('MYSQLI_STORE_RESULT_COPY_DATA', 16);
 define('MYSQLI_TYPE_JSON', 245);
 define('MYSQLI_TRANS_COR_AND_CHAIN', 1);
@@ -3571,3 +3674,8 @@ define('MYSQLI_REFRESH_REPLICA', 64);
  * @since 8.1
  */
 define('MYSQLI_IS_MARIADB', 0);
+
+/**
+ * @since 8.4
+ */
+define('MYSQLI_TYPE_VECTOR', 242);

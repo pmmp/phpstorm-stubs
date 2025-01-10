@@ -6,7 +6,7 @@ namespace MongoDB\BSON;
  * @since 1.16.0
  * @link https://secure.php.net/manual/en/class.mongodb-bson-document.php
  */
-final class Document implements \IteratorAggregate, \Serializable
+final class Document implements \ArrayAccess, \IteratorAggregate, \Serializable
 {
     private function __construct() {}
 
@@ -27,6 +27,18 @@ final class Document implements \IteratorAggregate, \Serializable
     final public function toCanonicalExtendedJSON(): string {}
 
     final public function toRelaxedExtendedJSON(): string {}
+
+    /** @since 1.17.0 */
+    public function offsetExists(mixed $offset): bool {}
+
+    /** @since 1.17.0 */
+    public function offsetGet(mixed $offset): mixed {}
+
+    /** @since 1.17.0 */
+    public function offsetSet(mixed $offset, mixed $value): void {}
+
+    /** @since 1.17.0 */
+    public function offsetUnset(mixed $offset): void {}
 
     final public function __toString(): string {}
 
