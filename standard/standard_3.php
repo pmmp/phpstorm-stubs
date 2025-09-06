@@ -131,7 +131,7 @@ function floor(int|float $num) {}
  * @return float The rounded value
  */
 #[Pure]
-function round(int|float $num, int $precision = 0, #[LanguageLevelTypeAware(['8.4' => 'RoundingMode|int'], default: 'int')] $mode = 0): float {}
+function round(int|float $num, int $precision = 0, #[LanguageLevelTypeAware(['8.4' => 'RoundingMode|int'], default: 'int')] $mode = RoundingMode::HalfAwayFromZero): float {}
 
 /**
  * Sine
@@ -796,6 +796,7 @@ function putenv(string $assignment): bool {}
  * @return string[]|false[]|false This function will return an array of option / argument pairs or false on
  * failure.
  */
+#[Pure(true)]
 function getopt(
     string $short_options,
     array $long_options = [],
@@ -805,7 +806,7 @@ function getopt(
 /**
  * Gets system load average
  * @link https://php.net/manual/en/function.sys-getloadavg.php
- * @return array|false an array with three samples (last 1, 5 and 15
+ * @return array{float, float, float}|false an array with three samples (last 1, 5 and 15
  * minutes).
  * @since 5.1.3
  */
@@ -855,8 +856,7 @@ function gettimeofday(#[TypeContract(true: "float", false: "int[]")] bool $as_fl
  * Gets the current resource usages
  * @link https://php.net/manual/en/function.getrusage.php
  * @param int $mode <p>
- * If who is 1, getrusage will be called with
- * RUSAGE_CHILDREN.
+ * If mode is 1, getrusage will be called with RUSAGE_CHILDREN.
  * </p>
  * @return array|false an associative array containing the data returned from the system
  * call. All entries are accessible by using their documented field names.
@@ -884,6 +884,7 @@ function getrusage(int $mode = 0): array|false {}
  * </p>
  * @return string the unique identifier, as a string.
  */
+#[Pure(true)]
 function uniqid(string $prefix = "", bool $more_entropy = false): string {}
 
 /**

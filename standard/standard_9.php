@@ -445,7 +445,6 @@ function array_intersect_uassoc(
  * array1 that are present in all the arguments.
  * @meta
  */
-#[Pure]
 function array_uintersect_uassoc(
     array $array,
     #[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')] array $array2,
@@ -783,8 +782,27 @@ function array_chunk(array $array, int $length, bool $preserve_keys = false): ar
  * @meta
  */
 #[Pure]
-#[LanguageLevelTypeAware(["8.0" => "array"], default: "array|false")]
-function array_combine(array $keys, array $values) {}
+#[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')]
+function array_combine(array $keys, array $values): array|false {}
+
+/**
+ * Creates an array by using one array for keys and another for its values
+ * @link https://php.net/manual/en/function.array-combine.php
+ * @param array $keys <p>
+ * Array of keys to be used. Illegal values for key will be
+ * converted to string.
+ * </p>
+ * @param array $values <p>
+ * Array of values to be used
+ * </p>
+ * @return array the combined array
+ * @throws \ValueError if the number of elements in keys and values does not
+ * match.
+ * @meta
+ */
+#[Pure]
+#[PhpStormStubsElementAvailable(from: '8.0')]
+function array_combine(array $keys, array $values): array {}
 
 /**
  * Checks if the given key or index exists in the array
@@ -985,8 +1003,11 @@ function assert_options(int $option, mixed $value): mixed {}
  * When using the optional operator argument, the
  * function will return true if the relationship is the one specified
  * by the operator, false otherwise.
+ * @throws ValueError when a non-supported operator is provided.
  */
+#[Pure]
 #[ExpectedValues([-1, 0, 1, false, true])]
+#[PhpStormStubsElementAvailable(from: '8.0')]
 function version_compare(
     string $version1,
     string $version2,
@@ -1007,6 +1028,65 @@ function version_compare(
                "ne"
            ])] ?string $operator
 ): int|bool {}
+
+/**
+ * Compares two "PHP-standardized" version number strings
+ * @link https://php.net/manual/en/function.version-compare.php
+ * @param string $version1 <p>
+ * First version number.
+ * </p>
+ * @param string $version2 <p>
+ * Second version number.
+ * </p>
+ * @param string|null $operator [optional] <p>
+ * If you specify the third optional operator
+ * argument, you can test for a particular relationship. The
+ * possible operators are: &lt;,
+ * lt, &lt;=,
+ * le, &gt;,
+ * gt, &gt;=,
+ * ge, ==,
+ * =, eq,
+ * !=, &lt;&gt;,
+ * ne respectively.
+ * </p>
+ * <p>
+ * This parameter is case-sensitive, so values should be lowercase.
+ * </p>
+ * @return int|bool|null By default, version_compare returns
+ * -1 if the first version is lower than the second,
+ * 0 if they are equal, and
+ * 1 if the second is lower.
+ * </p>
+ * <p>
+ * When using the optional operator argument, the
+ * function will return true if the relationship is the one specified
+ * by the operator, false otherwise.
+ * If a non supported operator is provided, it will return null.
+ */
+#[Pure]
+#[ExpectedValues([-1, 0, 1, false, true, null])]
+#[PhpStormStubsElementAvailable(to: '7.4')]
+function version_compare(
+    string $version1,
+    string $version2,
+    #[ExpectedValues(values: [
+        "<",
+        "lt",
+        "<=",
+        "le",
+        ">",
+        "gt",
+        ">=",
+        "ge",
+        "==",
+        "=",
+        "eq",
+        "!=",
+        "<>",
+        "ne"
+    ])] ?string $operator
+): int|bool|null {}
 
 /**
  * Convert a pathname and a project identifier to a System V IPC key

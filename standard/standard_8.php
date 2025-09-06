@@ -143,7 +143,7 @@ function metaphone(string $string, int $max_phonemes = 0) {}
 /**
  * Turn on output buffering
  * @link https://php.net/manual/en/function.ob-start.php
- * @param callable $callback [optional] <p>
+ * @param callable|null $callback <p>
  * An optional output_callback function may be
  * specified. This function takes a string as a parameter and should
  * return a string. The function will be called when
@@ -205,7 +205,7 @@ function metaphone(string $string, int $max_phonemes = 0) {}
  * </p>
  * @return bool true on success or false on failure.
  */
-function ob_start($callback, int $chunk_size = 0, int $flags = PHP_OUTPUT_HANDLER_STDFLAGS): bool {}
+function ob_start($callback = null, int $chunk_size = 0, int $flags = PHP_OUTPUT_HANDLER_STDFLAGS): bool {}
 
 /**
  * Flush (send) the output buffer
@@ -260,6 +260,7 @@ function ob_get_clean(): string|false {}
  * @return int|false the length of the output buffer contents or false if no
  * buffering is active.
  */
+#[Pure(true)]
 function ob_get_length(): int|false {}
 
 /**
@@ -268,6 +269,7 @@ function ob_get_length(): int|false {}
  * @return int the level of nested output buffering handlers or zero if output
  * buffering is not active.
  */
+#[Pure(true)]
 function ob_get_level(): int {}
 
 /**
@@ -349,6 +351,7 @@ function ob_get_level(): int {}
     "buffer_size" => "int",
     "buffer_used" => "int",
 ])]
+#[Pure(true)]
 function ob_get_status(bool $full_status = false): array {}
 
 /**
@@ -383,7 +386,7 @@ function ob_implicit_flush(#[LanguageLevelTypeAware(["8.0" => "bool"], default: 
 function ob_list_handlers(): array {}
 
 /**
- * Sort an array by key
+ * Sort an array by key in ascending order
  * @link https://php.net/manual/en/function.ksort.php
  * @param array &$array <p>
  * The input array.
@@ -944,12 +947,13 @@ function range(
  * </p>
  * @return bool true on success or false on failure.
  */
+#[LanguageLevelTypeAware(['8.5' => 'true'], default: 'bool')]
 function array_multisort(
     &$array,
     #[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')] $sort_order = SORT_ASC,
     #[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')] $sort_flags = SORT_REGULAR,
     &...$rest
-): bool {}
+) {}
 
 /**
  * Push elements onto the end of array
@@ -1054,7 +1058,7 @@ function array_unshift(array &$array, #[PhpStormStubsElementAvailable(from: '5.3
  * </p>
  * @return array the array consisting of the extracted elements.
  */
-function array_splice(array &$array, int $offset, ?int $length, mixed $replacement = []): array {}
+function array_splice(array &$array, int $offset, ?int $length = null, mixed $replacement = []): array {}
 
 /**
  * Extract a slice of the array
@@ -1086,7 +1090,7 @@ function array_splice(array &$array, int $offset, ?int $length, mixed $replaceme
  * @meta
  */
 #[Pure]
-function array_slice(array $array, int $offset, ?int $length, bool $preserve_keys = false): array {}
+function array_slice(array $array, int $offset, ?int $length = null, bool $preserve_keys = false): array {}
 
 /**
  * Merges the elements of one or more arrays together (if the input arrays have the same string keys, then the later value for that key will overwrite the previous one; if the arrays contain numeric keys, the later value will be appended)
@@ -1104,3 +1108,13 @@ function array_merge(
     #[PhpStormStubsElementAvailable(from: '5.3', to: '7.0')] $arrays,
     array ...$arrays
 ): array {}
+
+/**
+ * @since 8.5
+ */
+function array_first(array $array): mixed {}
+
+/**
+ * @since 8.5
+ */
+function array_last(array $array): mixed {}

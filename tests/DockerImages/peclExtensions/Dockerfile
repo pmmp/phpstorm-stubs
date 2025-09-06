@@ -36,12 +36,12 @@ RUN pecl install mcrypt
 RUN docker-php-ext-enable mcrypt
 RUN pecl install zip
 RUN docker-php-ext-enable zip
-RUN pecl install mongodb
-RUN docker-php-ext-enable mongodb
+#RUN pecl install mongodb
+#RUN docker-php-ext-enable mongodb
 RUN pecl install rdkafka
 RUN docker-php-ext-enable rdkafka
-RUN pecl install yaf
-RUN docker-php-ext-enable yaf
+#RUN pecl install yaf
+#RUN docker-php-ext-enable yaf
 RUN pecl install yar
 RUN docker-php-ext-enable yar
 RUN pecl install gnupg

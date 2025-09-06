@@ -4368,35 +4368,61 @@ define('CURLOPT_TCP_KEEPCNT', 326);
  * @since 8.4
  */
 define('CURLOPT_SERVER_RESPONSE_TIMEOUT', 112);
+
 /**
  * @since 8.4
  */
 define('CURLOPT_DEBUGFUNCTION', 1);
+
 /**
  * @since 8.4
  */
-define('CURLINFO_TEXT', 1);
+define('CURLINFO_TEXT', 0);
+
 /**
  * @since 8.4
  */
 define('CURLINFO_HEADER_IN', 1);
+
+/*
+ * CURLINFO_HEADER_OUT is defined above and has existed since PHP 5.1.3,
+ * but is reused in a different context relating to CURLINFO_DEBUGFUNCTION
+ *
+ * define('CURLINFO_HEADER_OUT', 2);
+ */
+
 /**
  * @since 8.4
  */
-define('CURLINFO_DATA_IN', 1);
+define('CURLINFO_DATA_IN', 3);
+
 /**
  * @since 8.4
  */
-define('CURLINFO_DATA_OUT', 1);
+define('CURLINFO_DATA_OUT', 4);
+
 /**
  * @since 8.4
  */
-define('CURLINFO_SSL_DATA_OUT', 1);
+define('CURLINFO_SSL_DATA_OUT', 5);
+
 /**
  * @since 8.4
  */
-define('CURLINFO_SSL_DATA_IN', 1);
+define('CURLINFO_SSL_DATA_IN', 6);
+
 /**
  * @since 8.4
  */
 define('CURLINFO_POSTTRANSFER_TIME_T', 6291523);
+
+define('CURLFOLLOW_ALL', 1);
+
+define('CURLFOLLOW_OBEYCODE', 2);
+define('CURLFOLLOW_FIRSTONLY', 3);
+define('CURLINFO_HTTPAUTH_USED', 2097221);
+define('CURLINFO_PROXYAUTH_USED', 2097222);
+define('CURLINFO_QUEUE_TIME_T', 6291521);
+define('CURLINFO_USED_PROXY', 2097218);
+define('CURLINFO_CONN_ID', 6291520);
+define('CURLOPT_SSL_SIGNATURE_ALGORITHMS', 10328);

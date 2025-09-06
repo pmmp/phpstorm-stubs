@@ -431,8 +431,7 @@ function method_exists($object_or_class, string $method): bool {}
  * @param string $property <p>
  * The name of the property
  * </p>
- * @return bool true if the property exists, false if it doesn't exist or
- * null in case of an error.
+ * @return bool true if the property exists, false otherwise
  */
 #[Pure]
 function property_exists($object_or_class, string $property): bool {}
@@ -441,7 +440,7 @@ function property_exists($object_or_class, string $property): bool {}
  * Checks if the trait exists
  * @param string $trait Name of the trait to check
  * @param bool $autoload [optional] Whether to autoload if not already loaded.
- * @return bool Returns TRUE if trait exists, FALSE if not, NULL in case of an error.
+ * @return bool Returns true if trait exists, false otherwise
  * @link https://secure.php.net/manual/en/function.trait-exists.php
  * @since 5.4
  */
@@ -605,7 +604,7 @@ function get_class_vars(string $class): array {}
  * for the specified <i>object</i> in scope. If a property have
  * not been assigned a value, it will be returned with a null value.
  */
-#[Pure]
+#[Pure(true)]
 function get_object_vars(object $object): array {}
 
 /**
@@ -709,6 +708,10 @@ function set_error_handler(?callable $callback, int $error_levels = E_ALL) {}
 function restore_error_handler(): bool {}
 
 /**
+ * @since 8.5
+ */
+function get_error_handler(): ?callable {}
+/**
  * Sets a user-defined exception handler function
  * @link https://php.net/manual/en/function.set-exception-handler.php
  * @param callable|null $callback <p>
@@ -723,6 +726,11 @@ function restore_error_handler(): bool {}
  * no previous handler was defined, null is also returned.
  */
 function set_exception_handler(?callable $callback) {}
+
+/**
+ * @since 8.5
+ */
+function get_exception_handler(): ?callable {}
 
 /**
  * Restores the previously defined exception handler function
@@ -813,6 +821,7 @@ function create_function(string $args, string $code): false|string {}
  * by this function, the return value will be the string
  * Unknown.
  */
+#[Pure(true)]
 function get_resource_type($resource): string {}
 
 /**
@@ -1032,6 +1041,7 @@ function get_defined_constants(bool $categorize = false): array {}
  * </tr>
  * </table>
  */
+#[Pure(true)]
 function debug_backtrace(int $options = DEBUG_BACKTRACE_PROVIDE_OBJECT, int $limit = 0): array {}
 
 /**
@@ -1140,3 +1150,8 @@ function exit(string|int $status = 0): never {}
  * @since 8.4
  */
 function die(string|int $status = 0): never {}
+
+/**
+ * @since 8.5
+ */
+function clone(object $object, array $withProperties = []): object {}

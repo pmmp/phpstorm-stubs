@@ -8,9 +8,15 @@ require_once __DIR__ . '/vendor/autoload.php';
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
     ->append(['.php-cs-fixer.php'])
-    ->notName('PhpStormStubsMap.php');
+    ->notName('PhpStormStubsMap.php')
+    ->notPath([
+        'tests/Parsers/StubParser.php',
+        'tests/Parsers/Visitors/ASTVisitor.php',
+        'Core/Core.php',
+    ]);
 
 return (new PhpCsFixer\Config())
+    ->setUnsupportedPhpVersionAllowed(true)
     ->registerCustomFixers([
         new BracesOneLineFixer(),
     ])

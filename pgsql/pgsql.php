@@ -1209,7 +1209,7 @@ function pg_copy_to(
 function pg_copy_from(
     #[LanguageLevelTypeAware(['8.1' => 'PgSql\Connection'], default: 'resource')] $connection,
     string $table_name,
-    array $rows,
+    #[LanguageLevelTypeAware(['8.5' => 'Traversable|array'], default: 'array')] $rows,
     string $separator = '	',
     string $null_as = '\\\\N'
 ): bool {}
@@ -2119,11 +2119,16 @@ function pg_socket_poll($socket, int $read, int $write, int $timeout = -1): int 
 /**
  * @since  8.4
  */
-function pg_set_chunked_rows_size(Pgsql\Connection $connection, int $size): bool {}
+function pg_set_chunked_rows_size(PgSql\Connection $connection, int $size): bool {}
 /**
  * @since 8.4
  */
 function pg_put_copy_end(PgSql\Connection $connection, ?string $error = null): int {}
+
+/**
+ * @since 8.5
+ */
+function pg_close_stmt(Pgsql\Connection $connection, string $statement_name): PgSql\Result|false {}
 
 /**
  * @since 8.4

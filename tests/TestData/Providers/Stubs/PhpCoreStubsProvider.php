@@ -24,7 +24,8 @@ class PhpCoreStubsProvider
             'SPL',
             'standard',
             'superglobals',
-            'tokenizer'
+            'tokenizer',
+            'uri'
         ],
         'BUNDLED' => [
             'apache',
@@ -111,6 +112,7 @@ class PhpCoreStubsProvider
             'imagick',
             'inotify',
             'interbase',
+            'jsonpath',
             'leveldb',
             'libevent',
             'LuaSandbox',

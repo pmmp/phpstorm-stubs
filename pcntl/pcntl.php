@@ -287,7 +287,8 @@ function pcntl_wstopsig(int $status): int|false {}
  * </p>
  * @return bool <b>FALSE</b> on error and does not return on success.
  */
-function pcntl_exec(string $path, array $args = [], array $env_vars = []): bool {}
+#[LanguageLevelTypeAware(["8.5" => "false"], default: "bool")]
+function pcntl_exec(string $path, array $args = [], array $env_vars = []) {}
 
 /**
  * Set an alarm clock for delivery of a signal
@@ -493,10 +494,11 @@ function pcntl_signal_get_handler(int $signal) {}
  * @since 7.4
  */
 function pcntl_unshare(int $flags): bool {}
+
 /**
  * @since 8.4
  */
-function pcntl_waitid(int $idtype = P_ALL, ?int $id = null, &$info = [], int $flags = WEXITED): bool {}
+function pcntl_waitid(int $idtype = P_ALL, ?int $id = null, &$info = [], int $flags = WEXITED, #[PhpStormStubsElementAvailable(from: '8.5')] &$resource_usage = []): bool {}
 /**
  * @since 8.4
  */

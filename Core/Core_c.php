@@ -279,7 +279,10 @@ interface Throwable extends Stringable
  */
 class Exception implements Throwable
 {
-    /** The error message */
+    /**
+     * The error message
+     * @var string
+     */
     protected $message;
 
     /** The error code */
@@ -526,6 +529,12 @@ class Error implements Throwable
     public function __wakeup(): void {}
 }
 
+/**
+ * Is thrown when the type of an argument is correct but the value of it is incorrect. For example, passing a negative
+ * integer when the function expects a positive one, or passing an empty string/array when the function expects it to not be empty.
+ * @link https://www.php.net/manual/en/class.valueerror.php
+ * @since 8.0
+ */
 class ValueError extends Error {}
 
 /**
@@ -604,7 +613,7 @@ class ErrorException extends Exception
      * @param int $severity [optional] The severity level of the exception.
      * @param string $filename [optional] The filename where the exception is thrown.
      * @param int $line [optional] The line number where the exception is thrown.
-     * @param Exception $previous [optional] The previous exception used for the exception chaining.
+     * @param Throwable $previous [optional] The previous exception used for the exception chaining.
      */
     #[Pure]
     public function __construct(
@@ -693,6 +702,11 @@ final class Closure
      * @since 7.1
      */
     public static function fromCallable(callable $callback): Closure {}
+
+    /**
+     * @since 8.5
+     */
+    public static function getCurrent(): Closure {}
 }
 
 /**
@@ -876,9 +890,15 @@ final class Attribute
     public const TARGET_PARAMETER = 32;
 
     /**
+     * Marks that attribute declaration is allowed only in constants.
+     * @since 8.5
+     */
+    public const TARGET_CONSTANT = 32;
+
+    /**
      * Marks that attribute declaration is allowed anywhere.
      */
-    public const TARGET_ALL = 63;
+    public const TARGET_ALL = 127;
 
     /**
      * Notes that an attribute declaration in the same place is
@@ -890,7 +910,7 @@ final class Attribute
      * @param int $flags A value in the form of a bitmask indicating the places
      * where attributes can be defined.
      */
-    public function __construct(#[ExpectedValues(flagsFromClass: Attribute::class)] int $flags = self::TARGET_ALL) {}
+    public function __construct(#[ExpectedValues(flagsFromClass: Attribute::class)] int $flags = Attribute::TARGET_ALL) {}
 }
 
 /**
@@ -937,7 +957,7 @@ interface BackedEnum extends UnitEnum
      * case, if any. If there is no matching case defined, it will throw a
      * <code>ValueError</code>.
      * @param int|string $value
-     * @throws ValueError
+     * @throws ValueError if there is no matching case defined
      * @throws TypeError
      * @return static
      * @link https://www.php.net/manual/en/backedenum.from.php
@@ -968,15 +988,23 @@ interface IntBackedEnum extends BackedEnum
     public readonly int $value;
 
     /**
+     * Translates an int into the corresponding <code>Enum</code>
+     * case, if any. If there is no matching case defined, it will throw a
+     * <code>ValueError</code>.
      * @param int $value
      * @return static
+     * @throws ValueError if there is no matching case defined
+     * @link https://www.php.net/manual/en/backedenum.from.php
      */
     #[Pure]
     public static function from(int $value): static;
 
     /**
+     * Translates an int into the corresponding <code>Enum</code>
+     * case, if any. If there is no matching case defined, it will return null.
      * @param int $value
      * @return static|null
+     * @link https://www.php.net/manual/en/backedenum.tryfrom.php
      */
     #[Pure]
     public static function tryFrom(int $value): ?static;
@@ -992,9 +1020,25 @@ interface StringBackedEnum extends BackedEnum
 {
     public readonly string $value;
 
+    /**
+     * Translates a string into the corresponding <code>Enum</code>
+     * case, if any. If there is no matching case defined, it will throw a
+     * <code>ValueError</code>.
+     * @param string $value
+     * @return static
+     * @throws ValueError if there is no matching case defined
+     * @link https://www.php.net/manual/en/backedenum.from.php
+     */
     #[Pure]
     public static function from(string $value): static;
 
+    /**
+     * Translates a string or int into the corresponding <code>Enum</code>
+     * case, if any. If there is no matching case defined, it will return null.
+     * @param string $value
+     * @return static|null
+     * @link https://www.php.net/manual/en/backedenum.tryfrom.php
+     */
     #[Pure]
     public static function tryFrom(string $value): ?static;
 }
@@ -1160,7 +1204,7 @@ final class Override
 /**
  * @since 8.4
  */
-#[Attribute(Attribute::TARGET_METHOD|Attribute::TARGET_FUNCTION|Attribute::TARGET_CLASS_CONSTANT)]
+#[Attribute(Attribute::TARGET_METHOD|Attribute::TARGET_FUNCTION|Attribute::TARGET_CLASS_CONSTANT|Attribute::TARGET_CONSTANT)]
 final class Deprecated
 {
     public readonly ?string $message;
@@ -1168,3 +1212,20 @@ final class Deprecated
 
     public function __construct(?string $message = null, ?string $since = null) {}
 }
+
+/**
+ * @since 8.5
+ */
+#[Attribute(Attribute::TARGET_METHOD|Attribute::TARGET_FUNCTION)]
+final class NoDiscard
+{
+    public readonly ?string $message;
+
+    public function __construct(?string $message = null) {}
+}
+
+/**
+ * @since 8.5
+ */
+#[Attribute(Attribute::TARGET_ALL)]
+final class DelayedTargetValidation {}
