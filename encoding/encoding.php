@@ -22,8 +22,8 @@ final class ByteBufferReader{
 	/**
 	 * Reads $length raw bytes from the buffer at the current offset.
 	 * The internal offset will be updated by this operation.
-     *
-     * @throws DataDecodeException if there are not enough bytes available
+	 *
+	 * @throws DataDecodeException if there are not enough bytes available
 	 */
 	public function readByteArray(int $length) : string{}
 
@@ -41,6 +41,12 @@ final class ByteBufferReader{
 	 * @throws \ValueError if the offset is out of bounds
 	 */
 	public function setOffset(int $offset) : void{}
+
+	/**
+	 * Returns the number of bytes available to read after the
+	 * current offset.
+	 */
+	public function getUnreadLength() : int{}
 
 	public function __serialize() : array{}
 
@@ -140,12 +146,22 @@ final class Byte{
 	/** @throws DataDecodeException */
 	public static function readUnsigned(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackUnsigned(string $bytes) : int{}
+
 	public static function writeUnsigned(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
+
+	public static function packUnsigned(int $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readSigned(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackSigned(string $bytes) : int{}
+
 	public static function writeSigned(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
+
+	public static function packSigned(int $value) : string{}
 }
 }
 
@@ -157,182 +173,102 @@ final class BE{
 	/** @throws DataDecodeException */
 	public static function readUnsignedShort(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackUnsignedShort(string $bytes) : int{}
+
 	public static function writeUnsignedShort(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readUnsignedShortArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeUnsignedShortArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packUnsignedShort(int $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readSignedShort(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackSignedShort(string $bytes) : int{}
+
 	public static function writeSignedShort(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readSignedShortArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeSignedShortArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packSignedShort(int $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readUnsignedInt(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackUnsignedInt(string $bytes) : int{}
+
 	public static function writeUnsignedInt(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readUnsignedIntArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeUnsignedIntArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packUnsignedInt(int $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readSignedInt(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackSignedInt(string $bytes) : int{}
+
 	public static function writeSignedInt(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readSignedIntArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeSignedIntArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packSignedInt(int $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readUnsignedLong(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackUnsignedLong(string $bytes) : int{}
+
 	public static function writeUnsignedLong(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readUnsignedLongArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeUnsignedLongArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packUnsignedLong(int $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readSignedLong(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackSignedLong(string $bytes) : int{}
+
 	public static function writeSignedLong(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readSignedLongArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeSignedLongArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packSignedLong(int $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readFloat(\pmmp\encoding\ByteBufferReader $buffer) : float{}
 
+	/** @throws DataDecodeException */
+	public static function unpackFloat(string $bytes) : float{}
+
 	public static function writeFloat(\pmmp\encoding\ByteBufferWriter $buffer, float $value) : void{}
 
-	/**
-	 * @return float[]
-	 * @phpstan-return list<float>
-	 * @throws DataDecodeException
-	 */
-	public static function readFloatArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param float[] $values
-	 * @phpstan-param list<float> $values
-	 */
-	public static function writeFloatArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packFloat(float $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readDouble(\pmmp\encoding\ByteBufferReader $buffer) : float{}
 
+	/** @throws DataDecodeException */
+	public static function unpackDouble(string $bytes) : float{}
+
 	public static function writeDouble(\pmmp\encoding\ByteBufferWriter $buffer, float $value) : void{}
 
-	/**
-	 * @return float[]
-	 * @phpstan-return list<float>
-	 * @throws DataDecodeException
-	 */
-	public static function readDoubleArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param float[] $values
-	 * @phpstan-param list<float> $values
-	 */
-	public static function writeDoubleArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packDouble(float $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readUnsignedTriad(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackUnsignedTriad(string $bytes) : int{}
+
 	public static function writeUnsignedTriad(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readUnsignedTriadArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeUnsignedTriadArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packUnsignedTriad(int $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readSignedTriad(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackSignedTriad(string $bytes) : int{}
+
 	public static function writeSignedTriad(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readSignedTriadArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeSignedTriadArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packSignedTriad(int $value) : string{}
 }
 }
 
@@ -344,182 +280,102 @@ final class LE{
 	/** @throws DataDecodeException */
 	public static function readUnsignedShort(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackUnsignedShort(string $bytes) : int{}
+
 	public static function writeUnsignedShort(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readUnsignedShortArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeUnsignedShortArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packUnsignedShort(int $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readSignedShort(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackSignedShort(string $bytes) : int{}
+
 	public static function writeSignedShort(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readSignedShortArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeSignedShortArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packSignedShort(int $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readUnsignedInt(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackUnsignedInt(string $bytes) : int{}
+
 	public static function writeUnsignedInt(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readUnsignedIntArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeUnsignedIntArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packUnsignedInt(int $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readSignedInt(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackSignedInt(string $bytes) : int{}
+
 	public static function writeSignedInt(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readSignedIntArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeSignedIntArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packSignedInt(int $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readUnsignedLong(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackUnsignedLong(string $bytes) : int{}
+
 	public static function writeUnsignedLong(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readUnsignedLongArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeUnsignedLongArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packUnsignedLong(int $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readSignedLong(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackSignedLong(string $bytes) : int{}
+
 	public static function writeSignedLong(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readSignedLongArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeSignedLongArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packSignedLong(int $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readFloat(\pmmp\encoding\ByteBufferReader $buffer) : float{}
 
+	/** @throws DataDecodeException */
+	public static function unpackFloat(string $bytes) : float{}
+
 	public static function writeFloat(\pmmp\encoding\ByteBufferWriter $buffer, float $value) : void{}
 
-	/**
-	 * @return float[]
-	 * @phpstan-return list<float>
-	 * @throws DataDecodeException
-	 */
-	public static function readFloatArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param float[] $values
-	 * @phpstan-param list<float> $values
-	 */
-	public static function writeFloatArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packFloat(float $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readDouble(\pmmp\encoding\ByteBufferReader $buffer) : float{}
 
+	/** @throws DataDecodeException */
+	public static function unpackDouble(string $bytes) : float{}
+
 	public static function writeDouble(\pmmp\encoding\ByteBufferWriter $buffer, float $value) : void{}
 
-	/**
-	 * @return float[]
-	 * @phpstan-return list<float>
-	 * @throws DataDecodeException
-	 */
-	public static function readDoubleArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param float[] $values
-	 * @phpstan-param list<float> $values
-	 */
-	public static function writeDoubleArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packDouble(float $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readUnsignedTriad(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackUnsignedTriad(string $bytes) : int{}
+
 	public static function writeUnsignedTriad(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readUnsignedTriadArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeUnsignedTriadArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packUnsignedTriad(int $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readSignedTriad(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackSignedTriad(string $bytes) : int{}
+
 	public static function writeSignedTriad(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readSignedTriadArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeSignedTriadArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packSignedTriad(int $value) : string{}
 }
 }
 
@@ -531,74 +387,42 @@ final class VarInt{
 	/** @throws DataDecodeException */
 	public static function readUnsignedInt(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackUnsignedInt(string $bytes) : int{}
+
 	public static function writeUnsignedInt(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readUnsignedIntArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeUnsignedIntArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packUnsignedInt(int $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readSignedInt(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackSignedInt(string $bytes) : int{}
+
 	public static function writeSignedInt(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readSignedIntArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeSignedIntArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packSignedInt(int $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readUnsignedLong(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackUnsignedLong(string $bytes) : int{}
+
 	public static function writeUnsignedLong(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readUnsignedLongArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeUnsignedLongArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packUnsignedLong(int $value) : string{}
 
 	/** @throws DataDecodeException */
 	public static function readSignedLong(\pmmp\encoding\ByteBufferReader $buffer) : int{}
 
+	/** @throws DataDecodeException */
+	public static function unpackSignedLong(string $bytes) : int{}
+
 	public static function writeSignedLong(\pmmp\encoding\ByteBufferWriter $buffer, int $value) : void{}
 
-	/**
-	 * @return int[]
-	 * @phpstan-return list<int>
-	 * @throws DataDecodeException
-	 */
-	public static function readSignedLongArray(\pmmp\encoding\ByteBufferReader $buffer, int $count) : array{}
-
-	/**
-	 * @param int[] $values
-	 * @phpstan-param list<int> $values
-	 */
-	public static function writeSignedLongArray(\pmmp\encoding\ByteBufferWriter $buffer, array $values) : void{}
+	public static function packSignedLong(int $value) : string{}
 }
 }
 
