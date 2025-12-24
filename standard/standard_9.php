@@ -196,11 +196,13 @@ function array_pad(array $array, int $length, mixed $value): array {}
 
 /**
  * Exchanges all keys with their associated values in an array
+ * @template TKey of int|string
+ * @template TValue of int|string
  * @link https://php.net/manual/en/function.array-flip.php
- * @param int[]|string[] $array <p>
+ * @param array<TKey, TValue> $array <p>
  * An array of key/value pairs to be flipped.
  * </p>
- * @return int[]|string[] Returns the flipped array.
+ * @return array<TValue, TKey> Returns the flipped array.
  */
 #[Pure]
 function array_flip(array $array): array {}
@@ -725,7 +727,7 @@ function array_product(array $array): int|float {}
  * @return array the filtered array.
  * @meta
  */
-function array_filter(array $array, ?callable $callback, int $mode = 0): array {}
+function array_filter(array $array, ?callable $callback = null, int $mode = 0): array {}
 
 /**
  * Applies the callback to the elements of the given arrays

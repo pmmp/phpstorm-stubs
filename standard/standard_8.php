@@ -1110,11 +1110,23 @@ function array_merge(
 ): array {}
 
 /**
+ * @template TKey
+ * @template TValue
+ * @param array<TKey, TValue> $array
+ * @return TValue|null
  * @since 8.5
+ * @meta
  */
+#[Pure]
 function array_first(array $array): mixed {}
 
 /**
+ * @template TKey
+ * @template TValue
+ * @param array<TKey, TValue> $array
+ * @return TValue|null
  * @since 8.5
+ * @meta
  */
+#[Pure]
 function array_last(array $array): mixed {}

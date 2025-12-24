@@ -22,7 +22,7 @@ class ReflectionMethod extends ReflectionFunctionAbstract
     public $name;
 
     /**
-     * @var string Fully qualified class name where this method was defined
+     * @var class-string Fully qualified class name where this method was defined
      */
     #[Immutable]
     #[LanguageLevelTypeAware(['8.1' => 'string'], default: '')]
@@ -298,6 +298,7 @@ class ReflectionMethod extends ReflectionFunctionAbstract
     #[Pure]
     #[PhpStormStubsElementAvailable(from: "8.1")]
     #[TentativeType]
+    #[Deprecated(since: '8.5')]
     public function setAccessible(bool $accessible): void {}
 
     #[PhpStormStubsElementAvailable(from: '8.2')]
